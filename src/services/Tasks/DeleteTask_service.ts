@@ -1,13 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import { TasksTypes } from "../../types/Task_types";
-import { TaskID } from "../../validators/Task/TaskIdValidator";
+import { Iduser } from '../../types/Task_types';
+import { IdUsuario } from "../../validators/Task/TaskIdValidator";
 
 class DeleteTaskService {
-  async execute(userData: TasksTypes) {
+  async execute(userData: Iduser) {
     const prisma = new PrismaClient();
 
-    TaskID(userData);
-
+    IdUsuario(userData)
     const findId = await prisma.task.findFirst({
       where: {
         id: userData.id,

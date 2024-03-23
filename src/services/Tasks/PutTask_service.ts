@@ -12,7 +12,7 @@ class PutTaskService {
 
     const findId = await prisma.task.findFirst({
       where: {
-        id: userData.id,
+        id: userData.userId,
       },
     });
 
@@ -21,7 +21,7 @@ class PutTaskService {
     }
     const PuttaskUsers = await prisma.task.update({
       where: {
-        id: userData.id,
+        id: userData.userId,
       },
       data: {
         nametask: userData.nametask,

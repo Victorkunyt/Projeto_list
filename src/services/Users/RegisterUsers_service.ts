@@ -7,8 +7,6 @@ class UsersService {
     async execute(userData: UserTypes) {
         const prisma = new PrismaClient();
         
-        //Validações//
-
         LineObrigatórios(userData)
         emailValidator(userData)
         CellphoneValidator(userData)

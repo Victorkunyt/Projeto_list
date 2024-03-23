@@ -2,8 +2,13 @@ interface TasksTypes {
 
 nametask: string
 categoryId: string
-id?: string
+userId: string
     
 }
 
-export {TasksTypes}
+interface Iduser {
+
+    id: string
+}
+
+export {TasksTypes,Iduser}

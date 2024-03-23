@@ -5,7 +5,7 @@ class TaskCreateController {
 
     async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
    
-            const userData = request.body as TasksTypes; 
+            const userData = request.body as TasksTypes
             const TaskUsers = new TaskService();
             const TaskReturn = await TaskUsers.execute(userData);
 
