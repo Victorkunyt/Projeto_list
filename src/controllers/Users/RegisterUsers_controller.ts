@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { UsersService } from "../../services/Users/CreateUsers_service";
+import { UsersService } from "../../services/Users/RegisterUsers_service";
 import { UserTypes } from "../../types/Users_types"; 
 
 class UsersCreateController {
@@ -8,9 +8,9 @@ class UsersCreateController {
    
             const userData = request.body as UserTypes; 
             const serviceUsers = new UsersService();
-            const newUser = await serviceUsers.execute(userData);
+            await serviceUsers.execute(userData);
 
-            response.code(201).send(newUser);
+            response.code(201).send({message: `Você foi cadastrado com sucesso`});
 }
     }
 

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { UserTypes} from "../../types/Users_types";
-import { LineObrigatórios,emailValidator } from "../../validators/Users";
+import { LineObrigatórios,emailValidator,CellphoneValidator,HolderidphoneValidator,GenderValidator,PasswordValidator} from "../../validators/Login/RegisterUsers";
 
 class UsersService {
 
@@ -11,6 +11,10 @@ class UsersService {
 
         LineObrigatórios(userData)
         emailValidator(userData)
+        CellphoneValidator(userData)
+        HolderidphoneValidator(userData)
+        GenderValidator(userData)
+        PasswordValidator(userData)
 
         const newUsers = await prisma.user.create({
             data: {
@@ -25,7 +29,7 @@ class UsersService {
             
         });
 
-        return newUsers;
+        return newUsers
     }
 }
 

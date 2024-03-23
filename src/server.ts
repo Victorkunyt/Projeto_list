@@ -1,9 +1,11 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
-import { routes } from "./routes/CreateUsers";
+import { routesUsers } from "./routes/Users";
+import { routesTask } from "./routes/Tasks";
 
 
-const app = fastify({logger: true})
+
+const app = fastify({logger: false})
 const PORT = parseInt(`${process.env.PORT || 3333}`)
 
 app.register(require('@fastify/jwt'), {
@@ -18,7 +20,7 @@ app.setErrorHandler((error, request, reply) => {
 const start = async () => {
 
     await app.register(cors)
-    await app.register(routes)
+    await app.register(routesUsers,routesTask)
     try {
       await app.listen({ port: PORT }, () => console.log(`Server is running at ${PORT}`));
   } catch (err) {
