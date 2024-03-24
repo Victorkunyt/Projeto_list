@@ -15,7 +15,7 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
   })
 
   fastify.get("/getUsersAll", async(request: FastifyRequest,reply: FastifyReply) => {
-    //await AuthMiddleware(request,reply)
+    await AuthMiddleware(request,reply)
     return new GetUsersAllController().handle(request,reply)
  })
 
