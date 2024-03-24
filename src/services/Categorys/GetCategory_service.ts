@@ -1,16 +1,28 @@
 import { PrismaClient } from "@prisma/client";
+import { TasksTypes } from "../../types/Task_types";
+
 
 class GetCategoryService {
-  async execute() {
+  async execute(userData: TasksTypes) {
     const prisma = new PrismaClient();
 
-    const searchCategory = await prisma.category.findMany({});
+    const Category = await prisma.category.findMany({});
 
-    if (searchCategory.length === 0) {
+    if (Category.length === 0) {
       return { message: "Nenhuma categoria encontrada" };
     }
 
-    return searchCategory;
+    const ArrayTasks = await prisma.task.findMany({
+
+      where: {
+        nametask: userData.nametask,
+      },
+      include: {
+        user: true,
+      },
+    })
+
+    return {Category,Tasks: ArrayTasks}
 
  
   }
