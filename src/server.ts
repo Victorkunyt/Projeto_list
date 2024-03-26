@@ -10,7 +10,7 @@ const app = fastify({logger: false});
 const PORT = parseInt(`${process.env.PORT || 3333}`);
 
 // Plugin do CORS
-app.register(cors);
+// app.register(cors);
 
  const route = [routesUsers, routesTask, routesCategory,];
 
