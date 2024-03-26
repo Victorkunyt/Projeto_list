@@ -13,7 +13,6 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
   });
   
   fastify.post("/register", async(request: FastifyRequest,reply: FastifyReply) => {
-    await AuthMiddleware(request,reply)
     return new UsersCreateController().handle(request,reply)
   })
 

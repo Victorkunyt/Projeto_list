@@ -38,6 +38,10 @@ const IdUsuario = (userData: Partial<Iduser>) => {
     throw new Error("O Parametro id não pode ser vazio ou nulo");
   }
 
+  if (typeof userData.id !== 'string' || userData.id.length !== 24){
+    throw new Error("id inválido");
+  }
+
 };
 
 export { TaskID, IdUsuario };

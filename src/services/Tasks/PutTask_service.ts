@@ -1,18 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-import { TasksTypes } from "../../types/Task_types";
-import { TaskID } from "../../validators/Task/TaskIdValidator";
+import { TasksTypes,Iduser } from "../../types/Task_types";
+import { TaskID,IdUsuario } from "../../validators/Task/TaskIdValidator";
 import { TaskCampos } from "../../validators/Task/TaskValidator";
 
 class PutTaskService {
-  async execute(userData: TasksTypes) {
+  async execute(userData: TasksTypes, id: Iduser) {
     const prisma = new PrismaClient();
 
     TaskCampos(userData);
-    TaskID(userData);
+    IdUsuario(id);
 
     const findId = await prisma.task.findFirst({
       where: {
-        id: userData.userId,
+        id: id.id,
       },
     });
 
@@ -21,7 +21,7 @@ class PutTaskService {
     }
     const PuttaskUsers = await prisma.task.update({
       where: {
-        id: userData.userId,
+        id: id.id,
       },
       data: {
         nametask: userData.nametask,
@@ -29,7 +29,7 @@ class PutTaskService {
       },
     });
 
-    return PuttaskUsers;
+    return {PuttaskUsers};
   }
 }
 

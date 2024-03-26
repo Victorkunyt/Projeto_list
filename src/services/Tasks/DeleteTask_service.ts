@@ -14,7 +14,7 @@ class DeleteTaskService {
     });
 
     if (!findId) {
-      throw new Error("Id não existe na base de dados");
+      throw new Error("Id da Task não existe na base de dados");
     }
     const DeletetaskUsers = await prisma.task.delete({
       where: {
