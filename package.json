@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "run mac": "npx nodemon src/server.ts --watch 'src/' -e ts",
-    "run windows": "tsx watch src/server.ts"
+    "run windows": "tsx watch src/server.ts",
+    "build": "prisma generate && next build"
   },
   "author": "Victor Harris",
   "license": "ISC",
