@@ -14,7 +14,6 @@ const PORT = parseInt(`${process.env.PORT || 3333}`);
 
  const route = [routesUsers, routesTask, routesCategory,];
 
- // Registre cada categoria de rota
  route.forEach(rotas => {
    app.register(rotas);
  })
