@@ -1,8 +1,0 @@
-{
-  "version": 2,
-  "routes": [
-    { "src": "/api/category", "dest": "src/routes/Category.ts" },
-    { "src": "/api/tasks", "dest": "src/routes/Tasks.ts" },
-    { "src": "/api/users", "dest": "src/routes/Users.ts" }
-  ]
-}
