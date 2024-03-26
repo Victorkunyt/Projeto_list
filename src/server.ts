@@ -11,12 +11,12 @@ const PORT = parseInt(`${process.env.PORT || 3333}`);
 
 // Plugin do CORS
 //app.register(cors);
+app.register(routesUsers);
+//  const route = [routesUsers, routesTask, routesCategory,];
 
- const route = [routesUsers, routesTask, routesCategory,];
-
- route.forEach(rotas => {
-   app.register(rotas);
- })
+//  route.forEach(rotas => {
+//    app.register(rotas);
+//  })
 
 // Plugin JWT
 app.register(require('@fastify/jwt'), {
