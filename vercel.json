@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "tsconfig.json", "use": "@vercel/static-build" }
-  ],
   "routes": [
     { "src": "/api/category", "dest": "src/routes/Category.ts" },
     { "src": "/api/tasks", "dest": "src/routes/Tasks.ts" },
