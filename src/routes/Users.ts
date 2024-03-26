@@ -8,7 +8,10 @@ import { AuthMiddleware } from "../middleware/auth";
 
 export async function routesUsers(fastify: FastifyInstance, options: FastifyPluginOptions) {
 
-
+  fastify.get("/", async (request: FastifyRequest, reply: FastifyReply) => {
+    reply.send({ message: "Bem-vindo à sua API!" });
+  });
+  
   fastify.post("/register", async(request: FastifyRequest,reply: FastifyReply) => {
 
     return new UsersCreateController().handle(request,reply)
