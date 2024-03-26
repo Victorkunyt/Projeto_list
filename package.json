@@ -11,6 +11,7 @@
   "author": "Victor Harris",
   "license": "ISC",
   "devDependencies": {
+    "@types/fastify-cors": "^2.1.0",
     "@types/fastify-jwt": "^0.8.1",
     "@types/jsonwebtoken": "^9.0.6",
     "prisma": "^5.11.0",
@@ -23,6 +24,7 @@
     "@types/mongoose": "^5.11.97",
     "cpf-validator-tmc": "^1.0.4",
     "fastify": "^4.26.2",
+    "fastify-cors": "^6.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.3",
