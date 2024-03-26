@@ -10,8 +10,9 @@ const app = fastify({logger: false});
 const PORT = parseInt(`${process.env.PORT || 3333}`);
 
 // Plugin do CORS
-// app.register(cors);
+ app.register(cors);
 
+// Registrando todas as Rotas
  const route = [routesUsers, routesTask, routesCategory,];
 
  route.forEach(rotas => {
@@ -38,15 +39,3 @@ const start = async () => {
 };
 
 start();
-
-
-
-
-
-
-// const routeCategories = [routesUsers, routesTasks, routesCategories, ...outrasCategorias];
-
-// // Registre cada categoria de rota
-// routeCategories.forEach(category => {
-//   app.register(category);
-// })

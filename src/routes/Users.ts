@@ -9,11 +9,11 @@ import { AuthMiddleware } from "../middleware/auth";
 export async function routesUsers(fastify: FastifyInstance, options: FastifyPluginOptions) {
 
   fastify.get("/", async (request: FastifyRequest, reply: FastifyReply) => {
-    reply.send({ message: "Bem-vindo à sua API!" });
+    reply.send({ message: "Active API" });
   });
   
   fastify.post("/register", async(request: FastifyRequest,reply: FastifyReply) => {
-
+    await AuthMiddleware(request,reply)
     return new UsersCreateController().handle(request,reply)
   })
 
@@ -23,12 +23,12 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
  })
 
   fastify.delete("/deleteUsers", async(request: FastifyRequest,reply: FastifyReply) => {
-
+    await AuthMiddleware(request,reply)
     return new DeleteUsersAllController().handle(request,reply)
 })
 
 fastify.post("/login", async(request: FastifyRequest,reply: FastifyReply) => {
-
+  await AuthMiddleware(request,reply)
   return new LoginUserController().handle(request,reply)
 })
 }
