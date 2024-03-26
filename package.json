@@ -6,7 +6,7 @@
   "scripts": {
     "run mac": "npx nodemon src/server.ts --watch 'src/' -e ts",
     "run windows": "tsx watch src/server.ts",
-    "build": "prisma generate"
+    "postinstall": "prisma generate"
   },
   "author": "Victor Harris",
   "license": "ISC",
