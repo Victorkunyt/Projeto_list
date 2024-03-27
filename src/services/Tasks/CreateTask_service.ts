@@ -2,10 +2,10 @@ import { PrismaClient } from "@prisma/client";
 import { TasksTypes } from "../../types/Task_types";
 import { TaskCampos } from "../../validators/Task/TaskValidator";
 import { TaskID } from "../../validators/Task/TaskIdValidator";
-
+const prisma = new PrismaClient();
 class TaskService {
   async execute(userData: TasksTypes) {
-    const prisma = new PrismaClient();
+   
 
     TaskCampos(userData);
     TaskID(userData);

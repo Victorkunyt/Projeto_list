@@ -9,18 +9,20 @@ import { AuthMiddleware } from "../middleware/auth";
 export async function routesUsers(fastify: FastifyInstance, options: FastifyPluginOptions) {
 
   fastify.get("/", async (request: FastifyRequest, reply: FastifyReply) => {
-    reply.send({ message: "Active API Vercel!" });
+    reply.send({ message: "Active API" });
   });
   
   fastify.post("/register", async(request: FastifyRequest,reply: FastifyReply) => {
     return new UsersCreateController().handle(request,reply)
   })
 
-  fastify.get("/getUsersAll", { preHandler: AuthMiddleware }, async(request: FastifyRequest,reply: FastifyReply) => {
+  fastify.get("/getUsersAll", async(request: FastifyRequest,reply: FastifyReply) => {
+    await AuthMiddleware(request,reply)
     return new GetUsersAllController().handle(request,reply)
  })
 
-  fastify.delete("/deleteUsers", { preHandler: AuthMiddleware }, async(request: FastifyRequest,reply: FastifyReply) => {
+  fastify.delete("/deleteUsers", async(request: FastifyRequest,reply: FastifyReply) => {
+    await AuthMiddleware(request,reply)
     return new DeleteUsersAllController().handle(request,reply)
 })
 

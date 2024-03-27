@@ -7,9 +7,9 @@ class TaskCreateController {
    
             const userData = request.body as TasksTypes
             const TaskUsers = new TaskService();
-            const TaskReturn = await TaskUsers.execute(userData);
+            await TaskUsers.execute(userData);
 
-            response.send(TaskReturn);
+            response.code(201);
 }
     }
 

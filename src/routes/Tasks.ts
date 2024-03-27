@@ -9,22 +9,26 @@ import { AuthMiddleware } from "../middleware/auth";
 export async function routesTask(fastify: FastifyInstance, options: FastifyPluginOptions) {
 
 
-    fastify.post("/registerTask", { preHandler: AuthMiddleware }, async(request: FastifyRequest,reply: FastifyReply) => {
+    fastify.post("/registerTask", async(request: FastifyRequest,reply: FastifyReply) => {
+      await AuthMiddleware(request,reply)
       return new TaskCreateController().handle(request,reply)
     }
     )
 
-    fastify.get("/getAlltask", { preHandler: AuthMiddleware }, async(request: FastifyRequest,reply: FastifyReply) => {
+    fastify.get("/getAlltask", async(request: FastifyRequest,reply: FastifyReply) => {
+      await AuthMiddleware(request,reply)
       return new TaskGetAllController().handle(request,reply)
     }
     )
 
-    fastify.put("/putTask", { preHandler: AuthMiddleware }, async(request: FastifyRequest,reply: FastifyReply) => {
+    fastify.put("/putTask", async(request: FastifyRequest,reply: FastifyReply) => {
+      await AuthMiddleware(request,reply)
       return new TaskUpdateController().handle(request,reply)
     }
     )
 
-    fastify.delete("/deleteTask", { preHandler: AuthMiddleware }, async(request: FastifyRequest,reply: FastifyReply) => {
+    fastify.delete("/deleteTask", async(request: FastifyRequest,reply: FastifyReply) => {
+      await AuthMiddleware(request,reply)
       return new TaskDeleteController().handle(request,reply)
     }
     )
