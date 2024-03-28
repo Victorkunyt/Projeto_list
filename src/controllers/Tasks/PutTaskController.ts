@@ -8,9 +8,9 @@ class TaskUpdateController {
             const userData = request.body as TasksTypes; 
             const id = request.query as Iduser;
             const PutTaskUsers = new PutTaskService();
-            const UpdateTaskReturn = await PutTaskUsers.execute(userData,id);
+            await PutTaskUsers.execute(userData,id);
 
-            response.send(UpdateTaskReturn);
+            response.code(204);
 }
     }
 

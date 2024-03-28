@@ -24,6 +24,7 @@
     "@prisma/client": "^5.11.0",
     "@types/mongoose": "^5.11.97",
     "cpf-validator-tmc": "^1.0.4",
+    "dayjs": "^1.11.10",
     "fastify": "^4.26.2",
     "fastify-cors": "^6.1.0",
     "jsonwebtoken": "^9.0.2",

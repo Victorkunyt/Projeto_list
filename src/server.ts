@@ -3,6 +3,7 @@ import cors from "@fastify/cors";
 import { routesUsers } from "./routes/Users";
 import { routesTask } from "./routes/Tasks";
 import { routesCategory } from "./routes/Category";
+import { routesRefreshToken } from "./routes/Refresh";
 
 
 
@@ -13,7 +14,7 @@ const PORT = parseInt(`${process.env.PORT || 3333}`);
  app.register(cors);
 
 // Registrando todas as Rotas
- const route = [routesUsers, routesTask, routesCategory,];
+ const route = [routesUsers, routesTask, routesCategory,routesRefreshToken];
 
  route.forEach(rotas => {
    app.register(rotas);

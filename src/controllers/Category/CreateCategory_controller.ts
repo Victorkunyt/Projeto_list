@@ -9,7 +9,7 @@ class CategoryCreateController {
             const Category = new CategoryService();
             await Category.execute(userData);
 
-            response.code(201).send({message: `Categoria criada com sucesso`});
+            response.code(201)
 }
     }
 

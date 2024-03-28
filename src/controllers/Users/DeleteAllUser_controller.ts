@@ -3,7 +3,7 @@ import { DeleteUsersAllService } from "../../services/Users/DeleteUserAll_servic
 
 class DeleteUsersAllController {
 
-    async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
+    async handle(response: FastifyReply): Promise<void> {
    
             const serviceUsersDelete = new DeleteUsersAllService();
             await serviceUsersDelete.execute();

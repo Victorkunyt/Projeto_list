@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { GeneratorTokenProvider } from "../../middleware/generate";
+import { GenerateRefrashToken } from "../../middleware/refresh";
 import { LogType } from "../../types/Login_types";
 import { LoginCampos } from "../../validators/Login/LoginValidador";
 
@@ -24,10 +25,13 @@ class LoginService {
     const gerneratorTokenProvider = new GeneratorTokenProvider()
     const token = await gerneratorTokenProvider.execute(userData)
 
+    const generateRefreshToken = new GenerateRefrashToken();
+    const refreshToken = await generateRefreshToken.execute(TableUsers[0].id);
 
-    return token
+
+    return {token,refreshToken}
     }
 
 }
 
-export { LoginService };
+export { LoginService};

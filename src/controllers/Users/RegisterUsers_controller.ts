@@ -10,7 +10,7 @@ class UsersCreateController {
             const serviceUsers = new UsersService();
             await serviceUsers.execute(userData);
 
-            response.code(201).send({message: `Você foi cadastrado com sucesso`});
+            response.code(201)
 }
     }
 
