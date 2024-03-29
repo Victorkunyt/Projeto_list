@@ -21,6 +21,7 @@ model User {
   updated_at    DateTime?     @default(now())
   refreshToken  RefreshToken?
   tasks         Task[]       @relation("UserTasks")
+  sharedTasks   SharedTask[] @relation("SharedTaskToUser") // Relação com a tabela de junção
   @@map("Users")
 }
 
@@ -31,12 +32,22 @@ model Task {
   categoryId    String?       @map("category_id") @db.ObjectId
   user          User?         @relation("UserTasks", fields: [userId], references: [id])
   userId        String?       @map("user_id") @db.ObjectId
+  sharedUsers   SharedTask[]  @relation("SharedTaskToTask") // Relação com a tabela de junção
   status        Boolean
   created_at    DateTime?     @default(now())
   updated_at    DateTime?     @default(now())
-  
   @@map("Tasks")
 }
+
+model SharedTask {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  user          User          @relation("SharedTaskToUser", fields: [userId], references: [id])
+  userId        String        @map("user_id") @db.ObjectId
+  task          Task          @relation("SharedTaskToTask", fields: [taskId], references: [id])
+  taskId        String        @map("task_id") @db.ObjectId
+  @@map("SharedTasks")
+}
+
 
 model Category {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId

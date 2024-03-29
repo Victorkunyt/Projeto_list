@@ -9,9 +9,14 @@ class GetCategoryService {
     const Category = await prisma.category.findMany({
 
       include: {
-        tasks: true,
+        tasks: {
+          include: {
+            sharedUsers: true // Inclui as tarefas compartilhadas
+          }
+        }
       }
     });
+    
 
     if (Category.length === 0) {
       return { message: "Nenhuma categoria encontrada" };
