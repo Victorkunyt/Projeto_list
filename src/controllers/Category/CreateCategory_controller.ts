@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { CategoryService } from "../../services/Categorys/CreateCategory_service";
 import { PayloadCategory } from "../../types/Category_types";
+
 class CategoryCreateController {
 
     async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {

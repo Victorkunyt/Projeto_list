@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { TasksTypes } from "../../types/Task_types";
 import { TaskCampos } from "../../validators/Task/TaskValidator";
 import { TaskID } from "../../validators/Task/TaskIdValidator";
+import { registerNotification } from "../../functions/SendNotification";
+
 const prisma = new PrismaClient();
 class TaskService {
   async execute(userData: TasksTypes) {
@@ -29,6 +31,9 @@ class TaskService {
       if (!ValidationCategoryid) {
         throw new Error("Category da task inválido");
       }
+
+  await registerNotification("Sua Task foi registrada com Sucesso", userData.userId);
+
 
     const taskUsers = await prisma.task.create({
       data: {
