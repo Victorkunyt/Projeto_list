@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { LineShared } from "../../types/Shared_types";
 import { SharedCampos } from "../../validators/ToShared/TosharedValidator";
+import { registerNotification } from "../../functions/SendNotification";
+
 
 const prisma = new PrismaClient();
 
@@ -52,6 +54,9 @@ class ToSharedService {
         taskId: userData.idTask,
       },
     });
+
+    await registerNotification("Task Compartilhada com outro Usuario com Sucesso", userToShareWith.id);
+
   }
 }
 
