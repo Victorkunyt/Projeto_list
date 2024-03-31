@@ -6,6 +6,7 @@ interface UserTypes {
     email: string;
     gender: string;
     password: string;
+    userId: any
 }
 
 export { UserTypes };

@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { UserTypes} from "../../types/Users_types";
 import { LineObrigatórios,emailValidator,CellphoneValidator,HolderidphoneValidator,GenderValidator,PasswordValidator} from "../../validators/Login/RegisterUsers";
+import { registerNotification } from "../../functions/SendNotification";
+
 
 class UsersService {
 
@@ -14,6 +16,9 @@ class UsersService {
         GenderValidator(userData)
         PasswordValidator(userData)
 
+
+
+
         const newUsers = await prisma.user.create({
             data: {
                 name: userData.name,
@@ -26,6 +31,13 @@ class UsersService {
             }
             
         });
+
+        const GetUsers = await prisma.user.findFirst({
+            where: userData.userId
+        });
+
+        await registerNotification("Sua Conta foi registrada com Sucesso", GetUsers?.id);
+
 
         return newUsers
     }
