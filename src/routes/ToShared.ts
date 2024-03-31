@@ -5,12 +5,13 @@ import { AuthMiddleware } from "../middleware/auth";
 
 export async function routesShared(fastify: FastifyInstance, options: FastifyPluginOptions) {
 
+  fastify.register(async function(fastify) {
+    fastify.addHook("preHandler", AuthMiddleware);
 
     fastify.post("/ToShared", async(request: FastifyRequest,reply: FastifyReply) => {
-      await AuthMiddleware(request,reply)
       return new ToSharedController().handle(request,reply)
     }
     )
-
+  })
 
 }

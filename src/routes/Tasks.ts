@@ -7,29 +7,27 @@ import { AuthMiddleware } from "../middleware/auth";
 
 
 export async function routesTask(fastify: FastifyInstance, options: FastifyPluginOptions) {
-
+  fastify.register(async function(fastify) {
+    fastify.addHook("preHandler", AuthMiddleware);
 
     fastify.post("/registerTask", async(request: FastifyRequest,reply: FastifyReply) => {
-      await AuthMiddleware(request,reply)
       return new TaskCreateController().handle(request,reply)
     }
     )
 
     fastify.get("/getAlltask", async(request: FastifyRequest,reply: FastifyReply) => {
-      await AuthMiddleware(request,reply)
       return new TaskGetAllController().handle(request,reply)
     }
     )
 
     fastify.put("/putTask", async(request: FastifyRequest,reply: FastifyReply) => {
-      await AuthMiddleware(request,reply)
       return new TaskUpdateController().handle(request,reply)
     }
     )
 
     fastify.delete("/deleteTask", async(request: FastifyRequest,reply: FastifyReply) => {
-      await AuthMiddleware(request,reply)
       return new TaskDeleteController().handle(request,reply)
     }
     )
+  })
   }

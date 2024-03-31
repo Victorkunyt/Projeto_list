@@ -16,17 +16,21 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
     return new UsersCreateController().handle(request,reply)
   })
 
+  fastify.post("/login", async(request: FastifyRequest,reply: FastifyReply) => {
+    return new LoginUserController().handle(request,reply)
+  })
+
+  fastify.register(async function(fastify) {
+    fastify.addHook("preHandler", AuthMiddleware);
+
   fastify.get("/getUsersAll", async(request: FastifyRequest,reply: FastifyReply) => {
-    await AuthMiddleware(request,reply)
     return new GetUsersAllController().handle(request,reply)
  })
 
   fastify.delete("/deleteUsers", async(request: FastifyRequest,reply: FastifyReply) => {
-    await AuthMiddleware(request,reply)
     return new DeleteUsersAllController().handle(request,reply)
 })
 
-fastify.post("/login", async(request: FastifyRequest,reply: FastifyReply) => {
-  return new LoginUserController().handle(request,reply)
-})
+
+  })
 }

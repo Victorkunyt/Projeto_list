@@ -4,12 +4,12 @@ import { AuthMiddleware } from "../middleware/auth";
 
 
 export async function routesNotification(fastify: FastifyInstance, options: FastifyPluginOptions) {
-
+  fastify.register(async function(fastify) {
+    fastify.addHook("preHandler", AuthMiddleware);
 
     fastify.get("/getnotification", async(request: FastifyRequest,reply: FastifyReply) => {
-      //await AuthMiddleware(request,reply)
       return new GetNotificaionController().handle(request,reply)
     }
     )
-
+  })
 }
