@@ -6,6 +6,8 @@ class DeleteUsersAllService {
 
     await prisma.refreshToken.deleteMany({});
 
+    await prisma.notification.deleteMany({})
+
     const helpUser = await prisma.user.deleteMany({
       
     });

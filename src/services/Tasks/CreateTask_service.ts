@@ -32,7 +32,6 @@ class TaskService {
         throw new Error("Category da task inválido");
       }
 
-  await registerNotification("Sua Task foi registrada com Sucesso", userData.userId);
 
 
     const taskUsers = await prisma.task.create({
@@ -43,6 +42,8 @@ class TaskService {
         status: true,
       },
     });
+
+    await registerNotification("Sua Task foi registrada com Sucesso", userData.userId);
 
     return taskUsers;
   }

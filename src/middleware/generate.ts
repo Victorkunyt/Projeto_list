@@ -7,7 +7,7 @@ class GeneratorTokenProvider {
 async execute(userData: LogType) {
 
 
-    const token = await jwt.sign({ userData }, "suaChaveSecreta", { 
+    const token = jwt.sign({ userData }, "suaChaveSecreta", { 
         
         expiresIn: "5m",
         

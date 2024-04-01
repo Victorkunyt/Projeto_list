@@ -20,8 +20,7 @@ class CategoryService {
             throw new Error('Usuário não encontrado, Por favor registre um usuario');
         }
 
-        // Chama a função de registro de notificação
-        await registerNotification("Sua Categoria foi registrada com Sucesso", userData.userId);
+
 
         // Cria a categoria
         const category = await prisma.category.create({
@@ -31,6 +30,8 @@ class CategoryService {
             }
         });
 
+                // Chama a função de registro de notificação
+                await registerNotification("Sua Categoria foi registrada com Sucesso", userData.userId);
         return category;
     }
 }
