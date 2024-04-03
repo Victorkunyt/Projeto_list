@@ -9,10 +9,16 @@ import {
   PasswordValidator,
 } from "../../validators/Login/RegisterUsers";
 import { registerNotification } from "../../functions/SendNotification";
+import prismaClient from "../../prisma";
 
 class UsersService {
+
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
   async execute(userData: UserTypes) {
-    const prisma = new PrismaClient();
 
     LineObrigatórios(userData);
     emailValidator(userData);
@@ -21,7 +27,7 @@ class UsersService {
     GenderValidator(userData);
     PasswordValidator(userData);
 
-    const VerificationEmail = await prisma.user.findFirst({
+    const VerificationEmail = await this.prisma.user.findFirst({
       where: {
         email: userData.email,
       },
@@ -33,7 +39,7 @@ class UsersService {
       );
     }
 
-    const VerificationCellPhone = await prisma.user.findFirst({
+    const VerificationCellPhone = await this.prisma.user.findFirst({
         where: {
           cellphone: userData.cellphone,
         },
@@ -45,7 +51,7 @@ class UsersService {
         );
       }
 
-    const VerificationHolderid = await prisma.user.findFirst({
+    const VerificationHolderid = await this.prisma.user.findFirst({
         where: {
           holderid: userData.holderid,
         },
@@ -59,7 +65,7 @@ class UsersService {
 
 
 
-    const newUsers = await prisma.user.create({
+    const newUsers = await this.prisma.user.create({
       data: {
         name: userData.name,
         holderid: userData.holderid,
@@ -71,14 +77,11 @@ class UsersService {
       },
     });
 
-    const GetUsers = await prisma.user.findFirst({
+    const GetUsers = await this.prisma.user.findFirst({
       where: userData.userId,
     });
 
-    await registerNotification(
-      "Sua Conta foi registrada com Sucesso",
-      GetUsers?.id
-    );
+    await registerNotification(prismaClient,"Sua Conta foi registrada com Sucesso",GetUsers?.id);
 
     return newUsers;
   }

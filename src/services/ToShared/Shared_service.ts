@@ -7,11 +7,17 @@ import { registerNotification } from "../../functions/SendNotification";
 const prisma = new PrismaClient();
 
 class ToSharedService {
+
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
   async execute(userData: LineShared) {
     SharedCampos(userData);
 
     // Validar se a task existe
-    const task = await prisma.task.findUnique({
+    const task = await this.prisma.task.findUnique({
       where: {
         id: userData.idTask,
       },
@@ -20,7 +26,7 @@ class ToSharedService {
       throw new Error("Tarefa não encontrada");
     }
     // Validar se o usuario existe
-    const userToShareWith = await prisma.user.findUnique({
+    const userToShareWith = await this.prisma.user.findUnique({
       where: {
         id: userData.idUser,
       },
@@ -30,7 +36,7 @@ class ToSharedService {
     }
 
     // Validar se a tarefa já foi compartilhada para esse usuário
-    const existTaskUser = await prisma.sharedTask.findFirst({
+    const existTaskUser = await this.prisma.sharedTask.findFirst({
       where: {
         userId: userData.idUser,
         taskId: userData.idTask,
@@ -48,14 +54,14 @@ class ToSharedService {
 
     // compartilhar task com outro usuario
 
-    await prisma.sharedTask.create({
+    await this.prisma.sharedTask.create({
       data: {
         userId: userData.idUser,
         taskId: userData.idTask,
       },
     });
 
-    await registerNotification("Task Compartilhada com outro Usuario com Sucesso", userToShareWith.id);
+    await registerNotification(prisma,"Task Compartilhada com outro Usuario com Sucesso", userToShareWith.id);
 
   }
 }

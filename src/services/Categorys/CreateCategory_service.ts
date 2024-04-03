@@ -6,11 +6,18 @@ import { registerNotification } from "../../functions/SendNotification";
 const prisma = new PrismaClient();
 
 class CategoryService {
+
+    private prisma: PrismaClient;
+
+    constructor(prisma: PrismaClient) {
+      this.prisma = prisma;
+    }
+
     async execute(userData: PayloadCategory) {
         CategoryCampos(userData);
 
         // Verifica se o usuário com o ID fornecido existe
-        const iduserServer = await prisma.user.findFirst({
+        const iduserServer = await this.prisma.user.findFirst({
             where: {
                 id: userData.userId
             }
@@ -23,7 +30,7 @@ class CategoryService {
 
 
         // Cria a categoria
-        const category = await prisma.category.create({
+        const category = await this.prisma.category.create({
             data: {
                 nameCategory: userData.nameCategory,
                 status: true,
@@ -31,7 +38,7 @@ class CategoryService {
         });
 
                 // Chama a função de registro de notificação
-                await registerNotification("Sua Categoria foi registrada com Sucesso", userData.userId);
+                await registerNotification(prisma,"Sua Categoria foi registrada com Sucesso", userData.userId);
         return category;
     }
 }

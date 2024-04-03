@@ -3,11 +3,16 @@ import { Iduser } from '../../types/Task_types';
 import { IdUsuario } from "../../validators/Task/TaskIdValidator";
 
 class DeleteTaskService {
+
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
   async execute(userData: Iduser) {
-    const prisma = new PrismaClient();
 
     IdUsuario(userData)
-    const findId = await prisma.task.findFirst({
+    const findId = await this.prisma.task.findFirst({
       where: {
         id: userData.id,
       },
@@ -16,7 +21,7 @@ class DeleteTaskService {
     if (!findId) {
       throw new Error("Id da Task não existe na base de dados");
     }
-    const DeletetaskUsers = await prisma.task.delete({
+    const DeletetaskUsers = await this.prisma.task.delete({
       where: {
         id: userData.id,
       }

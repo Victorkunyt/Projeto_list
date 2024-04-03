@@ -1,19 +1,19 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { GetNotificationsService } from "../../services/Notifications/Notifications_service";
+import { PrismaClient } from "@prisma/client";
 
 class GetNotificaionController {
+  private prisma: PrismaClient;
 
-async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
+  async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
+    const Notification = new GetNotificationsService(this.prisma);
+    const Getnotification = await Notification.execute();
 
-const Notification = new GetNotificationsService()
-const Getnotification = await Notification.execute()
-
-
-response.send(Getnotification)
+    response.send(Getnotification);
+  }
 }
 
-
-
-}
-
-export {GetNotificaionController}
+export { GetNotificaionController };

@@ -1,21 +1,22 @@
-import { FastifyRequest,FastifyReply } from "fastify";
+import { FastifyRequest, FastifyReply } from "fastify";
 import { GetCategoryService } from "../../services/Categorys/GetCategory_service";
 import { TasksTypes } from "../../types/Task_types";
-
-
-
+import { PrismaClient } from "@prisma/client";
 
 class GetCategoryController {
+  private prisma: PrismaClient;
 
-async handle(request: FastifyRequest, response: FastifyReply): Promise<void>  {
-    const userData =  request.query as TasksTypes
-    const Category = new GetCategoryService();
-    const returnCategorys = await Category.execute(userData);
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
 
-    return response.send(returnCategorys)
+  async handle(request: FastifyRequest, response: FastifyReply): Promise<void>  {
+    const userData = request.query as TasksTypes;
+    const categoryService = new GetCategoryService(this.prisma);
+    const returnCategorys = await categoryService.execute(userData);
 
+    return response.send(returnCategorys);
+  }
 }
 
-}
-
-export {GetCategoryController}
+export { GetCategoryController };

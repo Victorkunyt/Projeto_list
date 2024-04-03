@@ -1,10 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 
 class GetAllTaskService {
-  async execute() {
-    const prisma = new PrismaClient();
+  private prisma: PrismaClient;
 
-    const GettaskUsers = await prisma.task.findMany({
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
+  
+  async execute() {
+
+    const GettaskUsers = await this.prisma.task.findMany({
 
           include: {
             sharedUsers: true 

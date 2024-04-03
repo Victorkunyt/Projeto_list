@@ -4,13 +4,17 @@ import { TaskID,IdUsuario } from "../../validators/Task/TaskIdValidator";
 import { TaskCampos } from "../../validators/Task/TaskValidator";
 
 class PutTaskService {
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
   async execute(userData: TasksTypes, id: Iduser) {
-    const prisma = new PrismaClient();
 
     TaskCampos(userData);
     IdUsuario(id);
 
-    const findId = await prisma.task.findFirst({
+    const findId = await this.prisma.task.findFirst({
       where: {
         id: id.id,
       },
@@ -19,7 +23,7 @@ class PutTaskService {
     if (!findId) {
       throw new Error("Id não existe na base de dados");
     }
-    const PuttaskUsers = await prisma.task.update({
+    const PuttaskUsers = await this.prisma.task.update({
       where: {
         id: id.id,
       },

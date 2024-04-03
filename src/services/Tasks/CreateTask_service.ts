@@ -6,13 +6,19 @@ import { registerNotification } from "../../functions/SendNotification";
 
 const prisma = new PrismaClient();
 class TaskService {
+
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
   async execute(userData: TasksTypes) {
    
 
     TaskCampos(userData);
     TaskID(userData);
 
-    const ValidationComponente = await prisma.user.findFirst({
+    const ValidationComponente = await this.prisma.user.findFirst({
       where: {
         id: userData.userId,
       },
@@ -22,7 +28,7 @@ class TaskService {
       throw new Error("User Id de usuario inválido");
     }
 
-    const ValidationCategoryid = await prisma.category.findFirst({
+    const ValidationCategoryid = await this.prisma.category.findFirst({
         where: {
           id: userData.categoryId,
         },
@@ -34,7 +40,7 @@ class TaskService {
 
 
 
-    const taskUsers = await prisma.task.create({
+    const taskUsers = await this.prisma.task.create({
       data: {
         nametask: userData.nametask,
         categoryId: userData.categoryId,
@@ -43,7 +49,7 @@ class TaskService {
       },
     });
 
-    await registerNotification("Sua Task foi registrada com Sucesso", userData.userId);
+    await registerNotification(prisma,"Sua Task foi registrada com Sucesso", userData.userId);
 
     return taskUsers;
   }

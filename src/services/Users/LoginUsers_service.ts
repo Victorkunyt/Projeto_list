@@ -6,12 +6,17 @@ import { LoginCampos } from "../../validators/Login/LoginValidador";
 
 class LoginService {
 
+    private prisma: PrismaClient;
+
+    constructor(prisma: PrismaClient) {
+      this.prisma = prisma;
+    }
+
     async execute(userData: LogType) {
-        const prisma = new PrismaClient();
         
         LoginCampos(userData)
 
-    const TableUsers = await prisma.user.findMany({
+    const TableUsers = await this.prisma.user.findMany({
         where: {
             email: userData.login,
             password: userData.password

@@ -1,10 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 
 class GetUsersAllService {
-  async execute() {
-    const prisma = new PrismaClient();
 
-    const GetUsers = await prisma.user.findMany({});
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
+  async execute() {
+
+    const GetUsers = await this.prisma.user.findMany({});
 
     if (GetUsers.length === 0) {
       return { message: "Nenhum usuario encontrado" };

@@ -1,26 +1,24 @@
-import prismaClient from "../../src/prisma";
+import { PrismaClient } from "@prisma/client";
 
-export async function registerNotification(type: string, recipientId: any): Promise<void> {
-
+export async function registerNotification(prisma: PrismaClient, type: string, recipientId: string): Promise<void> {
     if (!recipientId.trim() || recipientId.length !== 24 || typeof recipientId !== 'string') {
         throw new Error('Erro ao registrar notificação: recipientId inválido.');
     }
- 
-     const ErroNotification = await prismaClient.notification.create({
-      data: {
-        type,
-        recipientId
-      }
-    });
 
-    if(!ErroNotification){
-        throw new Error('Erro ao registrar notificação: erro ao criar a notificação no prisma cliente');
-
+    try {
+        const newNotification = await prisma.notification.create({
+            data: {
+                type,
+                recipientId
+            }
+        });
+        
+        console.log('Notificação registrada com sucesso:', newNotification);
+    } catch (error) {
+        throw new Error('Erro ao registrar notificação: erro ao criar a notificação no Prisma Client');
     }
-    console.log('Notificação registrada com sucesso.');
-
-  
 }
+
 
 
 // id: Identificador único da notificação.
