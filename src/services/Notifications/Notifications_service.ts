@@ -9,11 +9,9 @@ class GetNotificationsService {
     this.prisma = prisma;
   }
   async execute() {
-    const prisma = new PrismaClient();
 
     const notification = await this.prisma.notification.findMany({});
     
-
 
 
     return {notification}
