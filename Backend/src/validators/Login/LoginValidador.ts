@@ -21,7 +21,7 @@ const RefreshLine = (userData: Partial<LogType>) =>  {
   }
   
   if (!userData.refresh_token.trim() || !userData.refresh_token?.trim() || typeof userData.refresh_token !== 'string' || userData.refresh_token.length !== 24) {
-    throw new Error("O Campo refresh_token é obrigatório");
+    throw new Error("O Campo refresh_token não pode estar em branco");
   }
 }
 
