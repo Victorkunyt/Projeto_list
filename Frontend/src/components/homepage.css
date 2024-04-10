@@ -1,0 +1,29 @@
+/* styles.css */
+/* Seções adicionadas para a estrutura de categorias e tarefas */
+.categories {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .category {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    width: 45%; /* Ajuste conforme necessário */
+  }
+  
+  .category h3 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .tasks {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .tasks li {
+    margin-bottom: 5px;
+  }
+  

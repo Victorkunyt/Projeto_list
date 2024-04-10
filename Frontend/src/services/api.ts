@@ -24,6 +24,18 @@ export const register = async (gender: string,name: string, email: string, cellp
         throw error;
     }
 
-
-
 }
+
+export const category = async (token: unknown) => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const response = await api.post("/category", {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
