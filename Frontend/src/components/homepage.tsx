@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// HomePage.tsx
 import  { useState, useEffect } from "react";
 import { category } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
+import RegisterTaskButton from "./ButtonRegisterTask";
 import "./homepage.css";
 
 interface HomePageProps {
@@ -68,6 +68,11 @@ function HomePage({ reload }: HomePageProps) {
       </div>
       <div className="logout-button-container">
         <LogoutButton onClick={handleLogout} />
+
+        <div className="RegisterTask-button-container">
+        <RegisterTaskButton onClick={handleLogout}
+        />
+          </div>  
       </div>
     </div>
   );
