@@ -1,12 +1,16 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { login, register } from "../services/api"; // Seu serviço de API
 import CustomAlert from "../contexts/alertLogin"; // Seu componente de alerta
 import "./login.css";
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage: React.FC = () => {
-  const [, setIsLoggedIn] = useState(false);
+
+interface LoginPageProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
+  const [, ] = useState(false);
   const [loginValue, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -18,7 +22,7 @@ const LoginPage: React.FC = () => {
   const [holderid, setHolderid] = useState<string>("");
   const [gender, setGender] = useState<string>("");
 
-
+  const Navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const specialCaracterRegex = /[@]/;
@@ -35,9 +39,14 @@ const LoginPage: React.FC = () => {
         }
         const userData = await login(loginValue, password);
         console.log("Usuário autenticado:", userData);
-        setIsLoggedIn(true);
-        
         setSuccessMessage("Login bem-sucedido!");
+        localStorage.setItem('isLoggedIn', 'true');
+        setIsLoggedIn(true);
+        const accessToken = userData.token.token
+        localStorage.setItem("token", accessToken)
+        Navigate('/homepage');
+
+        
       } else {
 
         if(!gender) {

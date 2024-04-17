@@ -26,15 +26,26 @@ export const register = async (gender: string,name: string, email: string, cellp
 
 }
 
+export const refresh = async (refresh_token: string) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await api.post("/refreshtoken", { refresh_token });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 export const category = async (token: unknown) => {
     // eslint-disable-next-line no-useless-catch
     try {
-      const response = await api.post("/category", {}, {
+      const response = await api.get("/category", {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      return response.data;
+      return response.data
     } catch (error) {
       throw error;
     }
