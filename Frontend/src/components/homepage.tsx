@@ -53,7 +53,7 @@ function HomePage({ reload }: HomePageProps) {
   }
 
   return (
-    <div className="login-container">
+    <div className="home-container">
       <div className="categories">
         {categories.map((category: any, index: number) => (
           <div className="category" key={index}>

@@ -1,3 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://4kwallpapers.com/images/wallpapers/persona-3-reload-3840x2160-12719.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+.home-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 100px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
 .categories {
   display: flex;
   flex-wrap: wrap; /* Para permitir que as categorias quebrem para a próxima linha */
@@ -11,7 +36,7 @@
   padding: 40px;
   border-radius: 20px;
   flex: 1;
-  -webkit-border-radius: 50px;
+  -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
