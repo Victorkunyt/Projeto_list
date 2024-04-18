@@ -23,7 +23,7 @@ const RegisterTaskButton: React.FC<TaskButtonProps> = ({ }) => {
   return (
     <>
       <button className="CreateTask-button" onClick={handleCreateTaskClick}>
-        Criar Tarefa
+        Criar Categoria
       </button>
       {modalOpen && (
         <div className="modal">

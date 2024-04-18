@@ -9,7 +9,7 @@ async execute(userData: LogType) {
 
     const token = jwt.sign({ userData }, "suaChaveSecreta", { 
         
-        expiresIn: "12h",
+        expiresIn: "24h",
         
      });
 
