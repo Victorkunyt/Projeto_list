@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from 'bcryptjs';
 import { UserTypes } from "../../types/Users_types";
 import {
   LineObrigatórios,
@@ -26,6 +27,8 @@ class UsersService {
     HolderidphoneValidator(userData);
     GenderValidator(userData);
     PasswordValidator(userData);
+
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
 
     const VerificationEmail = await this.prisma.user.findFirst({
       where: {
@@ -73,7 +76,7 @@ class UsersService {
         cellphone: userData.cellphone,
         email: userData.email,
         gender: userData.gender,
-        password: userData.password,
+        password: hashedPassword,
       },
     });
 

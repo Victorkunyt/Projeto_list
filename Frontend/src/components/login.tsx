@@ -42,7 +42,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
         setSuccessMessage("Login bem-sucedido!");
         localStorage.setItem('isLoggedIn', 'true');
         setIsLoggedIn(true);
-        const accessToken = userData.token.token
+        const accessToken = userData.token
         localStorage.setItem("token", accessToken)
         Navigate('/homepage');
 

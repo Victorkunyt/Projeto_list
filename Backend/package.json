@@ -12,6 +12,7 @@
   "author": "Victor Harris",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/fastify-cors": "^2.1.0",
     "@types/fastify-jwt": "^0.8.1",
     "@types/jest": "^29.5.12",
@@ -26,6 +27,7 @@
     "@fastify/jwt": "^8.0.0",
     "@prisma/client": "^5.11.0",
     "@types/mongoose": "^5.11.97",
+    "bcryptjs": "^2.4.3",
     "cpf-validator-tmc": "^1.0.4",
     "dayjs": "^1.11.10",
     "fastify": "^4.26.2",

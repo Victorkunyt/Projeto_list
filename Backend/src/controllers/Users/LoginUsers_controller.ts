@@ -16,7 +16,7 @@ class LoginUserController {
             const LoginUsers = new LoginService(this.prisma);
             const token = await LoginUsers.execute(userData);
 
-            response.send({token});
+            response.send(token);
 }
     }
 
