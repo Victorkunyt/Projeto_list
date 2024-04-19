@@ -50,3 +50,23 @@ export const category = async (token: unknown) => {
       throw error;
     }
   };
+
+  export const registerCategory = async (token: unknown, nameCategory: string, userId: string) => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const response = await api.post("/registerCategory", {
+        nameCategory,
+        userId
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+        
