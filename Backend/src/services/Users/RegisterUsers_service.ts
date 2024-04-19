@@ -84,7 +84,10 @@ class UsersService {
       where: userData.userId,
     });
 
-    await registerNotification(prismaClient,"Sua Conta foi registrada com Sucesso",GetUsers?.id);
+    if (GetUsers?.id) {
+      await registerNotification(prismaClient, "Sua Conta foi registrada com Sucesso", GetUsers.id);
+    }
+    
 
     return newUsers;
   }
