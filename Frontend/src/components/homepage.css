@@ -61,6 +61,10 @@ body {
   position: fixed;
   left: 20px; /* Ajusta a distância do lado esquerdo */
   top: 20px; /* Opcional: ajusta a distância do topo */
+}
 
+.RegisterTask2-button-container {
+  position: fixed;
+  top: 20px; /* Opcional: ajusta a distância do topo */
 
 }

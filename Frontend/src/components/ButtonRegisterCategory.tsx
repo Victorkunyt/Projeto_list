@@ -1,6 +1,6 @@
 /* eslint-disable no-empty-pattern */
 import React, { useState } from "react";
-import "./ButtonRegisterTask.css";
+import "./ButtonRegisterCategory.css";
 import { registerCategory } from "../services/api";
 import CustomAlert from "../contexts/alertLogin"; // Seu componente de alerta
 
@@ -9,7 +9,7 @@ interface TaskButtonProps {
   onClick: () => void;
 }
 
-const RegisterTaskButton: React.FC<TaskButtonProps> = ({ }) => {
+const RegisterCategoryButton: React.FC<TaskButtonProps> = ({ }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [error, setError] = useState<string>(""); // Defina o tipo para o estado error
@@ -85,4 +85,4 @@ const RegisterTaskButton: React.FC<TaskButtonProps> = ({ }) => {
   );
 };
 
-export default RegisterTaskButton;
+export default RegisterCategoryButton;

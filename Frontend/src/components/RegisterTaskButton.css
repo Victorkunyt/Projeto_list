@@ -1,0 +1,18 @@
+RegisterTaskButton.css
+
+.CreateTask2-button-container {
+  display: inline-block; /* Define os elementos como blocos em linha */
+  margin-right: 20px; /* Margem entre os botões */
+}
+
+.CreateTask2-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333; /* Cor do texto do botão */
+}
+
+.CreateTask2-button:hover {
+  color: #555; /* Cor do texto do botão ao passar o mouse */
+}
