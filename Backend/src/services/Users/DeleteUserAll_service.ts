@@ -8,7 +8,6 @@ class DeleteUsersAllService {
     this.prisma = prisma;
   }
   async execute() {
-    const prisma = new PrismaClient();
 
     await this.prisma.refreshToken.deleteMany({});
 

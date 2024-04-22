@@ -1,4 +1,6 @@
 import { PayloadCategory } from "../../types/Category_types";
+import { Iduser } from "../../types/Task_types";
+
 
 const CategoryCampos = (userData: Partial<PayloadCategory>) => {
   if (userData.nameCategory === undefined) {
@@ -22,3 +24,22 @@ const CategoryCampos = (userData: Partial<PayloadCategory>) => {
 };
 
 export { CategoryCampos };
+
+const Idvalidação = (userData: Partial <Iduser>) => {
+
+  if (userData.id === undefined) {
+    throw new Error("O Campo id não foi definido");
+  }
+  
+  if (!userData.id.trim()) {
+    throw new Error("O Parametro id não pode ser vazio ou nulo");
+  }
+  
+  if (typeof userData.id !== 'string' || userData.id.length !== 24){
+    throw new Error("id inválido");
+  }
+
+}
+
+export {Idvalidação}
+
