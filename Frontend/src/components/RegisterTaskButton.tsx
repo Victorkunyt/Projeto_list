@@ -14,7 +14,6 @@ const RegisterTaskButton: React.FC<RegisterTaskButtonProps> = ({ categories, }) 
   const [nametask, setTaskName] = useState("");
   const [error, setError] = useState<string>(""); // Defina o tipo para o estado error
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  const selectedUserId = "6622ae8865519f44fd5e2f29"
   const handleCreateTaskClick = () => {
     // Abre o modal
     setModalOpen(true);
@@ -32,14 +31,18 @@ const RegisterTaskButton: React.FC<RegisterTaskButtonProps> = ({ categories, }) 
 
   const handleCreateTask = async () => {
     try {
+      const userid = localStorage.getItem("userid");
       const token = localStorage.getItem("token");
-
+      if (!userid || !token) {
+        // Verifica se userid ou token é nulo e lida com isso
+        throw new Error("Usuário não autenticado."); // Ou outra ação adequada
+      }
       if (!nametask.trim()) { 
         setError("Por favor, insira um nome para a Tarefa.");
         return;
       }
 
-      await registerTask(token, nametask, selectedCategoryId, selectedUserId);
+      await registerTask(token, nametask, selectedCategoryId, userid);
       
       // Fecha o modal após criar a categoria
       setModalOpen(false);

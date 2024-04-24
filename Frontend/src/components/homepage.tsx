@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import { category, getUsers } from "../services/api"; // Importe a função getUsers do seu serviço de API
+import { category, getUsers } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import RegisterTaskButton from "./RegisterTaskButton";
@@ -15,26 +15,27 @@ interface HomePageProps {
 
 function HomePage({ reload }: HomePageProps) {
   const [categories, setCategories] = useState<any[]>([]);
-  const [users, setUsers] = useState<any[]>([]); // Adicione o estado para armazenar os usuários
+  const [users, setUsers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
       try {
+        const userid = localStorage.getItem("userid");
         const token = localStorage.getItem("token");
         const isLoggedIn = localStorage.getItem("isLoggedIn");
         if (!isLoggedIn) {
           navigate("/login");
           return;
         }
-        const categoryData = await category(token);
-        const userData = await getUsers(token); // Obtenha a lista de usuários
+        const categoryData = await category(userid, token); // Use o userId para chamar a função de categoria
+        const userData = await getUsers(token);
         if (categoryData && categoryData.Category) {
           setCategories(categoryData.Category);
         }
         if (userData && userData.users) {
-          setUsers(userData.users); // Defina os usuários no estado
+          setUsers(userData.users);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -72,22 +73,13 @@ function HomePage({ reload }: HomePageProps) {
           </div>
         ))}
       </div>
-      {/* Inclua o componente Notification aqui */}
-      <div className="home-container">
-      {/* ... */}
-
       <div className="notification-container">
         <Notificationtsx reload={reload} />
       </div>
-
-      {/* ... */}
-    </div>
-
       <div className="logout-button-container">
         <LogoutButton onClick={handleLogout} />
       </div>
       <div className="RegisterTask2-button-container">
-        {/* Passe as listas de categorias e usuários como props para RegisterTaskButton */}
         <RegisterCategoryButton onClick={function (): void {
           throw new Error("Function not implemented.");
         }} />
@@ -95,7 +87,6 @@ function HomePage({ reload }: HomePageProps) {
       </div>
     </div>
   );
-  
 }
 
 export default HomePage;

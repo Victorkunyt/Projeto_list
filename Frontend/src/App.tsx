@@ -19,7 +19,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={isLoggedIn ? <Navigate to="/homepage" /> : <LoginPage setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/homepage" element={isLoggedIn ? <HomePage reload={true} /> : <Navigate to="/" />} />
+        <Route path="/homepage" element={isLoggedIn ? <HomePage reload={true} /> : <Navigate to="/homepage" />} />
       </Routes>
     </Router>
   );

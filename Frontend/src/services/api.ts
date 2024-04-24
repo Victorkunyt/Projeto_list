@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // api.ts
 import axios from "axios";
 
@@ -10,10 +11,14 @@ export const login = async (login: string, password: string) => {
   try {
     const response = await api.post("/login", { login, password });
     return response.data;
+    
   } catch (error) {
     throw error;
   }
+  
 };
+
+
 
 export const register = async (
   gender: string,
@@ -63,10 +68,11 @@ export const getUsers = async (token: unknown) => {
   }
 };
 
-export const category = async (token: unknown) => {
+
+export const category = async (userId: unknown, token: unknown) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const response = await api.get("/category", {
+    const response = await api.get(`/category?userId=${userId}`, { // Use userId como parte do endpoint
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -76,6 +82,7 @@ export const category = async (token: unknown) => {
     throw error;
   }
 };
+
 
 export const registerCategory = async (
   token: unknown,

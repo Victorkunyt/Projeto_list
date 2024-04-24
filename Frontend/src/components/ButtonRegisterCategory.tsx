@@ -14,7 +14,6 @@ const RegisterCategoryButton: React.FC<TaskButtonProps> = ({ }) => {
   const [categoryName, setCategoryName] = useState("");
   const [error, setError] = useState<string>(""); // Defina o tipo para o estado error
 
-  const userId = "6622ae8865519f44fd5e2f29"; 
 
   const handleCreateTaskClick = () => {
     // Abre o modal
@@ -32,15 +31,20 @@ const RegisterCategoryButton: React.FC<TaskButtonProps> = ({ }) => {
   };
 
   const handleCreateCategory = async () => {
-    try {
-      const token = localStorage.getItem("token");
 
+    try {
+      const userid = localStorage.getItem("userid");
+      const token = localStorage.getItem("token");
+      if (!userid || !token) {
+        // Verifica se userid ou token é nulo e lida com isso
+        throw new Error("Usuário não autenticado."); // Ou outra ação adequada
+      }
       if (!categoryName.trim()) { 
         setError("Por favor, insira um nome para a categoria.");
         return;
       }
 
-      await registerCategory(token, categoryName, userId);
+      await registerCategory(token, categoryName, userid);
       
       // Fecha o modal após criar a categoria
       setModalOpen(false);

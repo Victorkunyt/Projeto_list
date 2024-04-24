@@ -44,6 +44,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
         setIsLoggedIn(true);
         const accessToken = userData.token
         localStorage.setItem("token", accessToken)
+        const accessUserid = userData.refreshToken.generateRefreshToken.UserId
+        localStorage.setItem("userid", accessUserid)
+
         Navigate('/homepage');
 
         
