@@ -43,3 +43,22 @@ const Idvalidação = (userData: Partial <Iduser>) => {
 
 export {Idvalidação}
 
+const userIdOnly = (userData: Partial <PayloadCategory>) => {
+
+
+  if (userData.userId === undefined) {
+    throw new Error("O Campo userId não foi definido");
+  }
+  
+  if (!userData.userId.trim()) {
+    throw new Error("O Parametro userId não pode ser vazio ou nulo");
+  }
+  
+  if (typeof userData.userId !== 'string' || userData.userId.length !== 24){
+    throw new Error("userId inválido");
+  }
+
+
+}
+
+export {userIdOnly}

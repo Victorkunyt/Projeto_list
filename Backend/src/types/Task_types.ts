@@ -1,7 +1,7 @@
 interface TasksTypes {
 
 nametask: string
-categoryId: string
+categoryId?: string
 userId: string
     
 }

@@ -1,5 +1,6 @@
 import { FastifyRequest,FastifyInstance,FastifyPluginOptions,FastifyReply} from "fastify"
 import { ToSharedController } from "../controllers/ToShared/Shared_controller";
+import { SharedTaskGetAllController } from "../controllers/ToShared/GetShared_controller";
 import { AuthMiddleware } from "../middleware/auth";
 import { PrismaClient } from "@prisma/client";
 
@@ -14,8 +15,11 @@ export async function routesShared(fastify: FastifyInstance, options: FastifyPlu
 
     fastify.post("/ToShared", async(request: FastifyRequest,reply: FastifyReply) => {
       return new ToSharedController(prisma).handle(request,reply)
-    }
-    )
+    })
+    fastify.get("/GetShared", async(request: FastifyRequest,reply: FastifyReply) => {
+
+      return new SharedTaskGetAllController(prisma).handle(request,reply)
+     })
   })
 
 }

@@ -33,7 +33,9 @@ class CategoryService {
         const category = await this.prisma.category.create({
             data: {
                 nameCategory: userData.nameCategory,
+                userId: userData.userId,
                 status: true,
+                
             }
         });
 

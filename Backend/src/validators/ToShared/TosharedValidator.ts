@@ -25,6 +25,18 @@ const SharedCampos = (userData: Partial<LineShared>) => {
   if (typeof userData.idUser !== 'string' || userData.idUser.length !== 24){
     throw new Error("IdUser inválido");
   }
+
+  if (userData.categoryId === undefined) {
+    throw new Error("O Campo categoryId não foi definido");
+  }
+
+  if (!userData.categoryId.trim()) {
+    throw new Error("O Campo Id da Categoria não pode estar em branco");
+  }
+
+  if (typeof userData.categoryId !== 'string' || userData.categoryId.length !== 24){
+    throw new Error("IdCategoria inválido");
+  }
 };
 
 export { SharedCampos };

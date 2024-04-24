@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { TasksTypes } from "../../types/Task_types";
+import { userIdOnly } from "../../validators/Category/CreateCategory_Validator";
 
 class GetCategoryService {
   private prisma: PrismaClient;
@@ -9,21 +10,24 @@ class GetCategoryService {
   }
 
   async execute(userData: TasksTypes) {
-    const Category = await this.prisma.category.findMany({
-      include: {
-        tasks: {
-          include: {
-            sharedUsers: true // Inclui as tarefas compartilhadas
-          }
-        }
-      }
-    });
-    
-    if (Category.length === 0) {
-      return { message: "Nenhuma categoria encontrada" };
-    }
+    userIdOnly(userData);
 
-    return { Category };
+      const Category = await this.prisma.category.findMany({
+        where: {
+          userId: userData.userId
+        },
+        include: {
+          tasks: true,
+          sharedTasks: true  
+        }
+      });
+      
+      if (!Category) {
+        return { message: "Categoria não encontrada para o usuário" };
+      }
+
+      return { Category };
+
   }
 }
 

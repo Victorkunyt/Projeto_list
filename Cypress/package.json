@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "cypress": "^13.8.0"
+  },
+  "name": "projeto_list",
+  "version": "1.0.0",
+  "description": "Cypress testing integration e Ui",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vitek",
+  "license": "ISC"
+}

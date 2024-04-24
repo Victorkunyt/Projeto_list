@@ -38,7 +38,15 @@ class TaskService {
         throw new Error("Category da task inválido");
       }
 
-
+      const VerificationCategopyUser = await this.prisma.category.findFirst({
+        where: {
+          id: userData.categoryId 
+        }
+      });
+      
+      if (!VerificationCategopyUser || VerificationCategopyUser.userId !== userData.userId) {
+        throw new Error("Não é possível criar uma tarefa com uma categoria que não pertence ao usuário.");
+      }
 
     const taskUsers = await this.prisma.task.create({
       data: {

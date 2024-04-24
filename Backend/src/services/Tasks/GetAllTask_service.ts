@@ -11,9 +11,6 @@ class GetAllTaskService {
 
     const GettaskUsers = await this.prisma.task.findMany({
 
-          include: {
-            sharedUsers: true 
-          }
     });
 
     if (GettaskUsers.length === 0) {

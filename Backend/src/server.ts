@@ -9,7 +9,7 @@ import { routesNotification } from "./routes/Notification";
 
 
 
-const app = fastify({logger: false});
+const app = fastify({logger: true});
 const PORT = parseInt(`${process.env.PORT || 3333}`);
 
 // Plugin do CORS
@@ -34,7 +34,6 @@ app.setErrorHandler((error, request, reply) => {
 const start = async () => {
   try {
     await app.listen({ port: PORT });
-    console.log(`Server is running at ${PORT}`);
   } catch (err) {
     console.error('Ocorreu um erro ao iniciar o servidor:', err);
     process.exit(1);
