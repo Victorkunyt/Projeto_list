@@ -20,8 +20,14 @@ const Notificationtsx = ({ reload }: NotificationProps) => {
 
   const fetchNotifications = async () => {
     try {
+      const userid = localStorage.getItem("userid");
       const token = localStorage.getItem("token");
-      const response = await notifications(token);
+      const response = await notifications(userid,token);
+
+      if (!userid || !token) {
+        // Verifica se userid ou token é nulo e lida com isso
+        throw new Error("Usuário não autenticado."); // Ou outra ação adequada
+      }
       if (response && response.notification) {
         const notificationsWithTimestamp = response.notification.map((notification: Notification) => ({
           ...notification,

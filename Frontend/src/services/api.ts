@@ -137,13 +137,11 @@ export const registerTask = async (
   }
 };
 
-export const notifications = async (
-  token: unknown,
-) => {
+export const notifications = async (userId: unknown,token: unknown,) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const response = await api.get(
-      "/getnotification",{
+      `/getnotification?userId=${userId}`,{
         headers: {
           Authorization: `Bearer ${token} `,
         },
