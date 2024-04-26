@@ -3,8 +3,6 @@ import { PayloadCategory } from "../../types/Category_types";
 import { CategoryCampos } from "../../validators/Category/CreateCategory_Validator";
 import { registerNotification } from "../../functions/SendNotification";
 
-const prisma = new PrismaClient();
-
 class CategoryService {
 
     private prisma: PrismaClient;
@@ -40,7 +38,7 @@ class CategoryService {
         });
 
                 // Chama a função de registro de notificação
-                await registerNotification(prisma,"Sua Categoria foi registrada com Sucesso", userData.userId);
+                await registerNotification(this.prisma,"Sua Categoria foi registrada com Sucesso", userData.userId);
         return category;
     }
 }

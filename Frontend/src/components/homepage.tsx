@@ -25,15 +25,16 @@ function HomePage({ reload }: HomePageProps) {
         const userid = localStorage.getItem("userid");
         const token = localStorage.getItem("token");
         const isLoggedIn = localStorage.getItem("isLoggedIn");
-        if (!isLoggedIn) {
+        if (!isLoggedIn || isLoggedIn === "false") {
           navigate("/login");
           return;
         }
         const categoryData = await category(userid, token); // Use o userId para chamar a função de categoria
-        const userData = await getUsers(token);
+        const userData = await getUsers(userid,token);
+ 
         if (categoryData && categoryData.Category) {
           setCategories(categoryData.Category);
-        }
+        } 
         if (userData && userData.users) {
           setUsers(userData.users);
         }

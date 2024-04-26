@@ -54,10 +54,10 @@ export const refresh = async (refresh_token: string) => {
   }
 };
 
-export const getUsers = async (token: unknown) => {
+export const getUsers = async (userId: unknown,token: unknown) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const response = await api.get("/getAlltask", {
+    const response = await api.get(`/getAlltask?userId=${userId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

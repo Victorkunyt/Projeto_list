@@ -57,7 +57,7 @@ class TaskService {
       },
     });
 
-    await registerNotification(prisma,"Sua Task foi registrada com Sucesso", userData.userId);
+    await registerNotification(prisma,"Sua Tarefa foi registrada com Sucesso", userData.userId);
 
     return taskUsers;
   }

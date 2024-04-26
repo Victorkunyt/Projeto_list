@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { userIdOnly } from "../../validators/Category/CreateCategory_Validator";
+import { TasksTypes } from "../../types/Task_types";
 
 class GetAllTaskService {
   private prisma: PrismaClient;
@@ -7,9 +9,16 @@ class GetAllTaskService {
     this.prisma = prisma;
   }
   
-  async execute() {
+  async execute(userData: TasksTypes) {
+
+    userIdOnly(userData)
 
     const GettaskUsers = await this.prisma.task.findMany({
+
+      where: {
+        userId: userData.userId
+
+      }
 
     });
 
