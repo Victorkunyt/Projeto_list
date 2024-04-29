@@ -10,7 +10,6 @@ import {
   PasswordValidator,
 } from "../../validators/Login/RegisterUsers";
 import { registerNotification } from "../../functions/SendNotification";
-import prismaClient from "../../prisma";
 
 class UsersService {
 
@@ -85,7 +84,7 @@ class UsersService {
     });
 
     if (GetUsers?.id) {
-      await registerNotification(prismaClient, "Sua Conta foi registrada com Sucesso", GetUsers.id);
+      await registerNotification(this.prisma, "Sua Conta foi registrada com Sucesso", GetUsers.id);
     }
     
 

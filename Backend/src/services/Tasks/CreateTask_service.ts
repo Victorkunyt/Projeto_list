@@ -4,7 +4,6 @@ import { TaskCampos } from "../../validators/Task/TaskValidator";
 import { TaskID } from "../../validators/Task/TaskIdValidator";
 import { registerNotification } from "../../functions/SendNotification";
 
-const prisma = new PrismaClient();
 class TaskService {
 
   private prisma: PrismaClient;
@@ -57,7 +56,7 @@ class TaskService {
       },
     });
 
-    await registerNotification(prisma,"Sua Tarefa foi registrada com Sucesso", userData.userId);
+    await registerNotification(this.prisma,"Sua Tarefa foi registrada com Sucesso", userData.userId);
 
     return taskUsers;
   }
