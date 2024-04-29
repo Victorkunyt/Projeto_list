@@ -1,10 +1,20 @@
+/* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// api.ts
+
+// import dotenv from 'dotenv';
+// dotenv.config();
+
 import axios from "axios";
 
+
+//var nodeEnv = process.env.REACT_APP_API_PROD_URL; 
+
+const baseurl = "https://projeto-list-git-main-developmentlist.vercel.app"
+
 export const api = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL: baseurl,
 });
+
 
 export const login = async (login: string, password: string) => {
   // eslint-disable-next-line no-useless-catch
