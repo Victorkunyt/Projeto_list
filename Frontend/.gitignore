@@ -24,4 +24,7 @@ dist-ssr
 *.sw?
 
 # Ignorar o deploy do backend
-Backend
+Projeto_list/Backend
+
+# Ignorar o Cypress 
+Projeto_list/Cypress
