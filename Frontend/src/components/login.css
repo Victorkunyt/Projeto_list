@@ -1,4 +1,3 @@
-/* styles.css */
 body {
     margin: 0;
     padding: 0;
@@ -26,7 +25,9 @@ h2 {
     color: #333;
 }
 
-input[type="text"], input[type="login"] {
+input[type="text"],
+input[type="login"],
+input[type="password"] {
     width: calc(100% - 40px);
     padding: 10px;
     margin: 10px;
@@ -34,34 +35,39 @@ input[type="text"], input[type="login"] {
     border-radius: 5px;
 }
 
-input[type="text"], input[type="password"] {
-    width: calc(100% - 40px);
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-input[type="submit"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 18px;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    background-color: #007bff;
-}
-
-
+.input-group .input-group-text button,
+input[type="submit"],
 button {
     width: calc(100% - 20px);
     padding: 10px;
     margin: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%; /* Altere o valor para 50% para tornar os botões circulares */
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
 }
+
+.input-group {
+    position: relative; /* Adicione essa propriedade para posicionar o botão de olho */
+    width: calc(100% - 0px);
+    margin: 0px;
+}
+
+.input-group .input-group-text {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    /*Altereparaposiçãoabsoluta*/right: 10px;
+    /*Ajusteaposiçãoparaoladodireito*/top: 50%;
+    /*Posicioneobotãonocentrovertical*/transform: translateY(-50%);
+    /*Ajusteparacentralizarverticalmente*/cursor: pointer;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
 

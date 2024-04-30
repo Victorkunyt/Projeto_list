@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 import { category, getUsers } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
@@ -57,8 +58,14 @@ function HomePage({ reload }: HomePageProps) {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <Spinner animation="border" />
+        <p>Carregando...</p>
+      </div>
+    );
   }
+  
 
   return (
     <div className="home-container">

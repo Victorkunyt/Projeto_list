@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle, faCheckCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface CustomAlertProps {
   message: string;
@@ -8,7 +8,8 @@ interface CustomAlertProps {
 }
 
 const CustomAlert: React.FC<CustomAlertProps> = ({ message, type = 'error' }) => {
-  const [closed, setClosed] = useState(false);
+  const [closed, setClosed] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   let icon;
   let bgColor;
@@ -33,21 +34,41 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ message, type = 'error' }) =>
       break;
   }
 
-  const handleClose = () => {
-    setClosed(true);
-  };
+  useEffect(() => {
+    if (message !== errorMessage) {
+      setClosed(false);
+      setErrorMessage(message);
+
+      const timer = setTimeout(() => {
+        setClosed(true);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message, errorMessage]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    if (!closed) {
+      timer = setTimeout(() => {
+        setClosed(true);
+      }, 3000);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [closed]);
 
   if (closed) {
-    return null; // Não renderizar o alerta se estiver fechado
+    return null;
   }
 
   return (
     <div style={{ backgroundColor: bgColor, color: textColor, padding: '10px', marginBottom: '10px', borderRadius: '5px', display: 'flex', alignItems: 'center' }}>
       <FontAwesomeIcon icon={icon} style={{ marginRight: '10px' }} />
-      <span>{message}</span>
-      <button style={{ marginLeft: 'auto', border: 'none', background: 'none', cursor: 'pointer' }} onClick={handleClose}>
-        <FontAwesomeIcon icon={faTimes} />
-      </button>
+      <span>{errorMessage}</span>
     </div>
   );
 };

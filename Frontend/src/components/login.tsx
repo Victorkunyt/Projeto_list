@@ -1,18 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button,Spinner,InputGroup } from "react-bootstrap";
 import { login, register } from "../services/api"; // Seu serviço de API
 import CustomAlert from "../contexts/alertLogin"; // Seu componente de alerta
 import "./login.css";
 import { useNavigate } from 'react-router-dom';
+import { FiEye, FiEyeOff } from 'react-icons/fi'; // Importe os ícones de olho aberto e fechado
+
 
 
 interface LoginPageProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
-  const [, ] = useState(false);
+  const [, setIsLoading] = useState<boolean>(false); // Estado para controlar o carregamento
   const [loginValue, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(true); // Estado para controlar se está na tela de login
@@ -26,8 +30,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const specialCaracterRegex = /[@]/;
-
     try {
+      setIsLoading(true);
+
       if (isLogin) {
         if (!loginValue.trim()) {
           setError("Por favor, preencha o campo login.");
@@ -38,14 +43,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
           return; 
         }
         const userData = await login(loginValue, password);
-        console.log("Usuário autenticado:", userData);
-        setSuccessMessage("Login bem-sucedido!");
         localStorage.setItem('isLoggedIn', 'true');
         setIsLoggedIn(true);
+
         const accessToken = userData.token
         localStorage.setItem("token", accessToken)
+
         const accessUserid = userData.refreshToken.generateRefreshToken.UserId
         localStorage.setItem("userid", accessUserid)
+        
+        setSuccessMessage("Login bem-sucedido!");
 
         Navigate('/homepage');
 
@@ -91,23 +98,28 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
         const specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
       
         if (password.length < 8) {
-          throw new Error('Senha precisa possuir pelo menos 8 caracteres');
+          setError('Senha precisa possuir pelo menos 8 caracteres');
+          return;
         }
       
         if (!/[A-Z]/.test(password)) {
-          throw new Error('Senha precisa possuir pelo menos 1 letra Maiúscula');
+          setError('Senha precisa possuir pelo menos 1 letra Maiúscula');
+          return;
         }
       
         if (!/[a-z]/.test(password)) {
-          throw new Error('Senha precisa possuir pelo menos 1 letra Minúscula');
+          setError('Senha precisa possuir pelo menos 1 letra Minúscula');
+          return;
         }
       
         if (!numericDigitRegex.test(password)) {
-          throw new Error('Senha precisa possuir pelo menos um Digito Numérico');
+          setError('Senha precisa possuir pelo menos um Digito Numérico');
+          return;
         }
       
         if (!specialCharacterRegex.test(password)) {
-          throw new Error('Senha precisa possuir pelo menos um caractere especial (e.g, !@#$%)');
+          setError('Senha precisa possuir pelo menos um caractere especial (e.g, !@#$%)');
+          return;
         }
         const userData = await register(
           gender,
@@ -124,7 +136,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
       setError("");
     } catch (error) {
       setError("Usuário não encontrado no banco de dados.");
+      setIsLoading(false);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -135,6 +152,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
         <CustomAlert message={successMessage} type="success" />
       )}
       <Form onSubmit={handleSubmit}>
+      {isLogin && <Spinner animation="border" />}
         {!isLogin && (
           <>
             <Form.Group controlId="formBasicGender">
@@ -205,15 +223,24 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
           </Form.Group>
         )}
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Senha</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Digite sua senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
+<Form.Group controlId="formBasicPassword">
+  <Form.Label>Senha</Form.Label>
+  <InputGroup>
+    <Form.Control
+      type={showPassword ? 'text' : 'password'}
+      placeholder="Digite sua senha"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+    {isLogin && (
+      <InputGroup.Text style={{ alignSelf: 'flex-start' }}>
+        <Button variant="outline-secondary" onClick={togglePasswordVisibility}>
+          {showPassword ? <FiEyeOff /> : <FiEye />}
+        </Button>
+      </InputGroup.Text>
+    )}
+  </InputGroup>
+</Form.Group>
 
         <Button variant="primary" type="submit">
           {isLogin ? "Entrar" : "Registrar"}

@@ -42,6 +42,11 @@ const RegisterTaskButton: React.FC<RegisterTaskButtonProps> = ({ categories, }) 
         return;
       }
 
+      if (!selectedCategoryId) {
+        setError("Por favor, selecione uma categoria");
+        return;
+      }
+
       await registerTask(token, nametask, selectedCategoryId, userid);
       
       // Fecha o modal após criar a categoria
