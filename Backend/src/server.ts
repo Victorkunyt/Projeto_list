@@ -7,6 +7,7 @@ import { routesRefreshToken } from "./routes/Refresh";
 import { routesShared } from "./routes/ToShared";
 import { routesNotification } from "./routes/Notification";
 import { routesPdf } from "./routes/GeneratePdf";
+import { routesNewpassword } from "./routes/Pass";
 
 
 
@@ -17,7 +18,7 @@ const PORT = parseInt(`${process.env.PORT || 3333}`);
  app.register(cors);
 
 // Registrando todas as Rotas
- const route = [routesUsers, routesTask, routesCategory,routesRefreshToken,routesShared,routesNotification,routesPdf];
+ const route = [routesUsers, routesTask, routesCategory, routesRefreshToken, routesShared, routesNotification, routesPdf, routesNewpassword];
 
  route.forEach(rotas => {
    app.register(rotas);
