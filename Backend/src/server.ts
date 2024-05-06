@@ -8,6 +8,7 @@ import { routesShared } from "./routes/ToShared";
 import { routesNotification } from "./routes/Notification";
 import { routesPdf } from "./routes/GeneratePdf";
 import { routesNewpassword } from "./routes/Pass";
+import { routesSendEmail } from "./routes/SendEmail";
 
 
 
@@ -18,7 +19,7 @@ const PORT = parseInt(`${process.env.PORT || 3333}`);
  app.register(cors);
 
 // Registrando todas as Rotas
- const route = [routesUsers, routesTask, routesCategory, routesRefreshToken, routesShared, routesNotification, routesPdf, routesNewpassword];
+ const route = [routesUsers, routesTask, routesCategory, routesRefreshToken, routesShared, routesNotification, routesPdf, routesNewpassword,routesSendEmail];
 
  route.forEach(rotas => {
    app.register(rotas);
