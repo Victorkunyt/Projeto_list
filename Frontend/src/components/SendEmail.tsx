@@ -4,7 +4,6 @@ import { Form, Button, Spinner } from 'react-bootstrap';
 import { SendEmail } from '../services/api';
 import "./Newpassword.css"; 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import CustomAlert from "../contexts/alertLogin"; 
 
 const NewPasswordPage = () => {
   const [to, setTo] = useState<string>("");
@@ -24,7 +23,7 @@ const NewPasswordPage = () => {
       await SendEmail(to);
       setSuccessMessage('Email enviado com sucesso!');
     } catch (error) {
-      setError('Ocorreu um erro ao redefinir a senha.');
+      setError('Email não encontrado no banco de dados.');
     }
     setIsLoading(false);
   };
