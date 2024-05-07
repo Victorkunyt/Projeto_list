@@ -4,6 +4,7 @@ import { Form, Button,Spinner,InputGroup } from "react-bootstrap";
 import { login, register } from "../services/api"; // Seu serviço de API
 import CustomAlert from "../contexts/alertLogin"; // Seu componente de alerta
 import "./login.css";
+import "./Newpassword.css"
 import { useNavigate } from 'react-router-dom';
 import { FiEye, FiEyeOff } from 'react-icons/fi'; // Importe os ícones de olho aberto e fechado
 
@@ -25,6 +26,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
   const [cellphone, setCellphone] = useState<string>("");
   const [holderid, setHolderid] = useState<string>("");
   const [gender, setGender] = useState<string>("");
+  
 
   const Navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -144,6 +146,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
     setShowPassword(!showPassword);
   };
 
+  const handleForgotPassword = () => {
+
+    Navigate('/esqueceu-senha');
+  };
+
   return (
     <div className="login-container">
       <h2>{isLogin ? "Login" : "Registro"}</h2>
@@ -209,6 +216,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
               />
             </Form.Group>
           </>
+          
         )}
 
         {isLogin && (
@@ -242,14 +250,23 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
   </InputGroup>
 </Form.Group>
 
-        <Button variant="primary" type="submit">
-          {isLogin ? "Entrar" : "Registrar"}
-        </Button>
-      </Form>
-      <Button variant="primary" onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? "Registrar" : "Voltar ao Login"}
-      </Button>
-    </div>
+<Button variant="primary" type="submit">
+  {isLogin ? "Entrar" : "Registrar"}
+</Button>
+</Form>
+<Button variant="primary" onClick={() => setIsLogin(!isLogin)}>
+  {isLogin ? "Registrar" : "Voltar ao Login"}
+</Button>
+
+{isLogin && (
+<Button variant="link" onClick={handleForgotPassword} className="forgot-password-link">
+  Esqueceu a senha?
+</Button>
+)}
+
+
+
+</div>
   );
 };
 

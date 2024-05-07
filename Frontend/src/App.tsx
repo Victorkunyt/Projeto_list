@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/login';
 import HomePage from './components/homepage';
+import ForgotPasswordPage from './components/SendEmail';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,7 +22,9 @@ const App = () => {
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={isLoggedIn ? <Navigate to="/homepage" /> : <LoginPage setIsLoggedIn={setIsLoggedIn} />} />
       <Route path="/homepage" element={isLoggedIn ? <HomePage reload={true} /> : <Navigate to="/login" />} />
-
+      <Route path="/enviarEmailsenha" element={<ForgotPasswordPage />} />
+      <Route path="/esqueceu-senha" element={<ForgotPasswordPage />} />
+      
       </Routes>
     </Router>
   );

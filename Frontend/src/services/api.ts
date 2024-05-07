@@ -162,3 +162,37 @@ export const notifications = async (userId: unknown,token: unknown,) => {
     throw error;
   }
 };
+
+export const SendEmail = async (to: string) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+     const service = "gmail";
+     const user = "rhipmasterltda@gmail.com";
+     const pass = "iywp rehm qptt cijm";
+     const from = "REDEFINIR SENHA <rhipmasterltda@gmail.com";
+     const subject = "NOVA SENHA";
+     const text = "Olá, acesse esse link para redirecionar a tela de nova senha: https://projeto-list-git-main-developmentlist.vercel.app/esqueceu-senha";
+
+    const response = await api.post("/sendEmail", {service,user,pass,from,subject,text, to });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+export const Newpassword = async (userId: unknown, password: string, newpassword: string, repeatNewpassword: string) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await api.put(`/newPassword?userId=${userId}`,{
+      password,
+      newpassword,
+      repeatNewpassword
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

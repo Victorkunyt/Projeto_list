@@ -20,8 +20,12 @@ class SendEmailService {
 
         const ValidationEmail = await this.prisma.user.findMany({
             where: {
-                email: userData.to
+                email: {
+                    contains: userData.to,
+                    mode: "insensitive"
+                }
             }
+            
         })
 
         if (ValidationEmail.length === 0) {
