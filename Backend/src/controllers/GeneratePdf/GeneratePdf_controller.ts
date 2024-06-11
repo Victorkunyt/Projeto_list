@@ -10,18 +10,23 @@ class GeneratePDFController {
     this.prisma = prisma;
   }
 
-  async handle(request: FastifyRequest, response: FastifyReply): Promise<void>  {
+  async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
+    const userData = request.body as UserNames;
+    const PdfService = new GeneratePdfService(this.prisma);
 
-      const userData = request.body as UserNames;
-      const categoryService = new GeneratePdfService(this.prisma);
-      const pdfPath = await categoryService.execute(userData);
-
-  const Jsonreturn = {
-    message: "PDF Gerado com sucesso",
-    PdfGeneration: pdfPath
-  }
-      response.send(Jsonreturn)
+    try {
+      const pdfPath = await PdfService.execute(userData);
+      const downloadLink = `${request.protocol}://${request.hostname}/pdfs/${userData.userId}.pdf`;
+      response.send({ message: 'PDF generated successfully', downloadLink });
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      response.status(500).send('Internal Server Error');
+    }
   }
 }
 
 export { GeneratePDFController };
+
+
+// id Int @id @default(autoincrement()) 
+// id String @id @default(uuid())

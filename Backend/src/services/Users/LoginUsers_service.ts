@@ -37,7 +37,7 @@ class LoginService {
         const gerneratorTokenProvider = new GeneratorTokenProvider()
         const token = await gerneratorTokenProvider.execute(userData)
 
-        const generateRefreshToken = new GenerateRefrashToken();
+        const generateRefreshToken = new GenerateRefrashToken(this.prisma);
         const refreshToken = await generateRefreshToken.execute(user.id);
 
         return { token, refreshToken }
