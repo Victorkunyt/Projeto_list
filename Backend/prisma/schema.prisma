@@ -82,7 +82,9 @@ model Notification {
   recipient     User      @relation("UserNotifications", fields: [recipientId], references: [id])
   recipientId   String    @map("recipient_id") @db.ObjectId
   timestamp     DateTime  @default(now())
+  expiresAt     DateTime? // Campo opcional para a data de expiração
 }
+
 
 model PdfStorage {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
