@@ -9,7 +9,6 @@ import { routesNotification } from "./routes/Notification";
 import { routesPdf } from "./routes/GeneratePdf";
 import { routesNewpassword } from "./routes/Pass";
 import { routesSendEmail } from "./routes/SendEmail";
-import { injectSpeedInsights } from '@vercel/speed-insights';
 import fastifyJwt from '@fastify/jwt';
 
 const app = fastify({ logger: true });
@@ -40,7 +39,6 @@ const start = async () => {
   try {
     await configureServer();
     await app.listen({ port: PORT });
-    injectSpeedInsights();
   } catch (err) {
     console.error('Ocorreu um erro ao iniciar o servidor:', err);
     process.exit(1);
