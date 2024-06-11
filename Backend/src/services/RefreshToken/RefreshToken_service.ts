@@ -1,4 +1,3 @@
-import prismaClient from "../../prisma";
 import { GeneratorTokenProvider } from "../../middleware/generate";
 import {LogType} from "../../types/Login_types";
 import { RefreshLine } from "../../validators/Login/LoginValidador";
