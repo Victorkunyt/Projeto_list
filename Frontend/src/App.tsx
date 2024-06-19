@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './components/login';
 import HomePage from './components/homepage';
 import ForgotPasswordPage from './components/SendEmail';
+import ResetPassword from './components/ResetPassword';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +23,7 @@ const App = () => {
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={isLoggedIn ? <Navigate to="/homepage" /> : <LoginPage setIsLoggedIn={setIsLoggedIn} />} />
       <Route path="/homepage" element={isLoggedIn ? <HomePage reload={true} /> : <Navigate to="/login" />} />
-      <Route path="/enviarEmailsenha" element={<ForgotPasswordPage />} />
+      <Route path="/Redefinir-senha" element={<ResetPassword/>} />
       <Route path="/esqueceu-senha" element={<ForgotPasswordPage />} />
       
       </Routes>

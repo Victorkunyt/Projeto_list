@@ -7,15 +7,16 @@ import { PrismaClient } from "@prisma/client";
 
 export async function routesNewpassword(fastify: FastifyInstance, options: FastifyPluginOptions) {
 
+  const prisma = new PrismaClient()
+  
   fastify.register(async function(fastify) {
     fastify.addHook("preHandler", AuthMiddleware);
 
-    const prisma = new PrismaClient()
+    
+  })
 
-    fastify.put("/newPassword", async(request: FastifyRequest,reply: FastifyReply) => {
-      return new NewPasswordController(prisma).handle(request,reply)
-    })
-
+  fastify.put("/newPassword", async(request: FastifyRequest,reply: FastifyReply) => {
+    return new NewPasswordController(prisma).handle(request,reply)
   })
 
 }
