@@ -13,8 +13,12 @@ class SendEmailController {
     async handle(request: FastifyRequest, reply: FastifyReply): Promise<void>  {
         const userData =  request.body as sendEmailLines
         const sendService = new SendEmailService(this.prisma);
-        await sendService.execute(userData);
-        reply.send({ message: "Email enviado com sucesso" });
+        const Id = await sendService.execute(userData);
+        const ReplyEmail = {
+          message: "Email enviado com sucesso",
+          userId: Id
+        }
+        reply.send(ReplyEmail);
     }
 }
 

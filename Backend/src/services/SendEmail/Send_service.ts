@@ -18,7 +18,7 @@ class SendEmailService {
 
         emailSendValidator(userData)
 
-        const ValidationEmail = await this.prisma.user.findMany({
+        const ValidationEmails = await this.prisma.user.findMany({
             where: {
                 email: {
                     contains: userData.to,
@@ -28,9 +28,11 @@ class SendEmailService {
             
         })
 
-        if (ValidationEmail.length === 0) {
+        if (ValidationEmails.length === 0) {
          throw new Error('Email não encontrado no banco de dados')
         }
+
+        const user = ValidationEmails[0];
 
         const nodemailer = require('nodemailer') as any;
         
@@ -54,6 +56,8 @@ class SendEmailService {
                 text: userData.text,
 
             });
+
+            return user.id
 
         } catch (err) {
             throw new Error('Erro ao enviar o email:');
