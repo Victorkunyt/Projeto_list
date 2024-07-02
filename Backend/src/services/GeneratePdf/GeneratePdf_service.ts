@@ -31,11 +31,10 @@ class GeneratePdfService {
     const pdfDoc = new pdfkit();
     const buffers: any[] = [];
 
-
     pdfDoc.on('data', buffers.push.bind(buffers));
     pdfDoc.on('end', async () => {
       const pdfData = Buffer.concat(buffers);
-
+  
       // Salva o PDF no MongoDB
       await this.prisma.pdfStorage.create({
         data: {

@@ -13,9 +13,9 @@ class GeneratePDFController {
   async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
     const userData = request.body as UserNames;
     const PdfService = new GeneratePdfService(this.prisma);
-
+  
     try {
-      const pdfPath = await PdfService.execute(userData);
+      await PdfService.execute(userData);
       const downloadLink = `${request.protocol}://${request.hostname}/pdfs/${userData.userId}.pdf`;
       response.send({ message: 'PDF generated successfully', downloadLink });
     } catch (error) {
@@ -23,6 +23,7 @@ class GeneratePDFController {
       response.status(500).send('Internal Server Error');
     }
   }
+  
 }
 
 export { GeneratePDFController };
