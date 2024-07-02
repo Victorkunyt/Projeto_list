@@ -1,5 +1,4 @@
 interface payloadNewPassword {
-password: string,
 newpassword: string,
 repeatNewpassword: string
 

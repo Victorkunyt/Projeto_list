@@ -5,14 +5,10 @@ import { userIdNewPassword } from "../../types/NewPassword_types";
 const NewPasswordLines = (userData: Partial<payloadNewPassword>) => {
 
 
-        if (userData.newpassword === undefined) {
+        if (userData.newpassword === undefined || userData.repeatNewpassword === undefined) {
           throw new Error("O Payload não está definido.");
       }
 
-      if (!userData.password?.trim()) {
-        throw new Error("O Password atual é obrigatório.");
-    }
-      
         const numericDigitRegex = /\d/;
         const specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
       

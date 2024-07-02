@@ -4,6 +4,7 @@ import { GeneratorTokenProvider } from "../../middleware/generate";
 import { GenerateRefrashToken } from "../../middleware/refresh";
 import { LogType } from "../../types/Login_types";
 import { LoginCampos } from "../../validators/Login/LoginValidador";
+import { ExistsError } from "../../error/ExistsError";
 
 class LoginService {
 
@@ -24,14 +25,14 @@ class LoginService {
         })
 
         if (!user) {
-            throw new Error('Usuário não encontrado');
+            throw new ExistsError('Usuário não encontrado');
         }
 
         // Compara a senha fornecida com a senha criptografada no banco de dados
         const passwordMatch = await bcrypt.compare(userData.password, user.password);
 
         if (!passwordMatch) {
-            throw new Error("Senha incorreta. Verifique suas credenciais.");
+            throw new ExistsError("Senha incorreta. Verifique suas credenciais.");
         }
 
         const gerneratorTokenProvider = new GeneratorTokenProvider()

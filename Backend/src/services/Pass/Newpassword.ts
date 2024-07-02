@@ -4,6 +4,7 @@ import { payloadNewPassword } from "../../types/NewPassword_types";
 import { userIdNewPassword } from "../../types/NewPassword_types";
 import { NewPasswordLines } from "../../validators/Pass/NewpasswordValidator";
 import { NewPasswordId } from "../../validators/Pass/NewpasswordValidator";
+import { ExistsError } from "../../error/ExistsError";
 
 class NewPasswordService {
 
@@ -23,23 +24,13 @@ class NewPasswordService {
     }
   })
   if (!existingUser) {
-    throw new Error(`Usuário não encontrado`);
+    throw new ExistsError(`Usuário não encontrado`);
   }
-
-  const passwordMatch = await bcrypt.compare(userData.password, existingUser.password);
 
   NewPasswordLines(userData)
   
-  if (!passwordMatch) {
-    throw new Error(`A senha informada não é a mesma que está registrada no banco de dados`);
-  }
-
 
   const hashedPassword = await bcrypt.hash(userData.repeatNewpassword, 10);
-
-  if (userData.password === userData.newpassword && userData.password === userData.repeatNewpassword) {
-       throw new Error(`Não é possivel Atualizar a senha com a mesma senha anterior`)
-  }
 
 
   const Updatepassword = await this.prisma.user.update({

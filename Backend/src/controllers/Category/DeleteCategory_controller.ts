@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { DeleteCategoryService } from "../../services/Categorys/DeleteCategory_service";
 import { Iduser } from "../../types/Task_types";
 import { PrismaClient } from "@prisma/client";
+import { ExistsError } from "../../error/ExistsError";
 
 class CategoryDeleteController {
     private prisma: PrismaClient;
@@ -13,9 +14,18 @@ class CategoryDeleteController {
    
             const userData = request.query as Iduser; 
             const DeleteCategoryUsers = new DeleteCategoryService(this.prisma);
-            await DeleteCategoryUsers.execute(userData);
 
-            response.code(204);
+            try {
+              await DeleteCategoryUsers.execute(userData);
+              response.code(204);
+            } catch (error) {
+              if (error instanceof ExistsError) {
+                response.status(400).send({ error: error.message });
+              } else {
+                response.send(error)
+              }
+            }
+
 }
     }
 

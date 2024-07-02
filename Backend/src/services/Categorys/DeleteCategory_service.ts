@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Iduser } from "../../types/Task_types";
 import { Idvalidação } from "../../validators/Category/CreateCategory_Validator";
+import { ExistsError } from "../../error/ExistsError";
 
 class DeleteCategoryService {
   private prisma: PrismaClient;
@@ -19,7 +20,7 @@ class DeleteCategoryService {
     });
 
     if (!findId) {
-      throw new Error("Id da Categoria não existe na base de dados");
+      throw new ExistsError("Id da Categoria não existe na base de dados");
     }
 
     // Encontre todas as tarefas associadas a esta categoria

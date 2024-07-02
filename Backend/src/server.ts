@@ -14,30 +14,24 @@ import fastifyJwt from '@fastify/jwt';
 const app = fastify({ logger: true });
 const PORT = parseInt(`${process.env.PORT || 3333}`);
 
-const configureServer = async () => {
+
   // Plugin do CORS
-  await app.register(cors);
+  app.register(cors);
 
   // Plugin JWT
-  await app.register(fastifyJwt, {
+  app.register(fastifyJwt, {
     secret: 'supersecret'
   });
 
   // Registrando todas as Rotas
   const routes = [routesUsers, routesTask, routesCategory, routesRefreshToken, routesShared, routesNotification, routesPdf, routesNewpassword, routesSendEmail];
 
-  for (const route of routes) {
-    await app.register(route);
-  }
-
-  app.setErrorHandler((error, request, reply) => {
-    reply.code(400).send({ message: error.message });
-  });
-};
+ routes.forEach(routes => {
+  app.register(routes)
+ })
 
 const start = async () => {
   try {
-    await configureServer();
     await app.listen({ port: PORT });
   } catch (err) {
     console.error('Ocorreu um erro ao iniciar o servidor:', err);
