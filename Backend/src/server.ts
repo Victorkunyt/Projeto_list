@@ -1,5 +1,8 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
+import fastifyJwt from '@fastify/jwt';
+import path from 'path';
+import fastifyStatic from '@fastify/static';
 import { routesUsers } from "./routes/Users";
 import { routesTask } from "./routes/Tasks";
 import { routesCategory } from "./routes/Category";
@@ -9,9 +12,6 @@ import { routesNotification } from "./routes/Notification";
 import { routesPdf } from "./routes/GeneratePdf";
 import { routesNewpassword } from "./routes/Pass";
 import { routesSendEmail } from "./routes/SendEmail";
-import fastifyJwt from '@fastify/jwt';
-import path from 'path';
-import fastifyStatic from '@fastify/static';
 
 const app = fastify({ logger: true });
 const PORT = parseInt(`${process.env.PORT || 3333}`);
@@ -41,9 +41,9 @@ routes.forEach(route => {
   app.register(route);
 });
 
-// Configuração para servir arquivos estáticos (PDFs gerados)
+// Servir arquivos estáticos (PDFs gerados)
 app.register(fastifyStatic, {
-  root: path.join(__dirname, 'pdfs'),  // Certifique-se de que 'pdfs' é o diretório correto
+  root: path.join(__dirname, 'pdfs'),
   prefix: '/pdfs/',
 });
 
