@@ -18,11 +18,12 @@ class GetPdf {
         createdAt: "desc", // Para garantir que estamos obtendo o PDF mais recente
       },
     });
+
     if (!pdfRecord) {
       throw new Error("PDF not found");
     }
 
-    return Buffer.from(pdfRecord.pdfBlob);  // Certifique-se de que está retornando um Buffer
+    return Buffer.from(pdfRecord.pdfBlob); // Convertendo para Buffer
   }
 }
 

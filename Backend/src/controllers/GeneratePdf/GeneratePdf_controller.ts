@@ -3,7 +3,7 @@ import { GeneratePdfService } from "../../services/GeneratePdf/GeneratePdf_servi
 import { UserNames } from '../../types/PdfGenerator_types';
 import { PrismaClient } from "@prisma/client";
 
-class PdfDownloadController {
+class GeneratePDFController {
   private prisma: PrismaClient;
 
   constructor(prisma: PrismaClient) {
@@ -11,30 +11,17 @@ class PdfDownloadController {
   }
 
   async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
-    const userData = request.query as UserNames
+    const userData = request.body as UserNames;
+    const PdfService = new GeneratePdfService(this.prisma);
 
     try {
-      const pdfData = await this.prisma.pdfStorage.findMany({
-        where: {
-          userId: userData.userId
-        },
-      });
-
-      if (!pdfData) {
-        response.status(404).send({ message: 'PDF not found' });
-        return;
-      }
-
-      // Respondendo com o PDF diretamente
-      response.header('Content-Type', 'application/pdf');
-      response.send(pdfData);
-
+       await PdfService.execute(userData);
+      response.send({ message: 'PDF generated successfully' });
     } catch (error) {
-      console.error('Error fetching PDF from database:', error);
+      console.error('Error generating PDF:', error);
       response.status(500).send('Internal Server Error');
     }
   }
 }
 
-export { PdfDownloadController };
-
+export { GeneratePDFController };
