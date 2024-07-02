@@ -30,33 +30,21 @@ class GeneratePdfService {
 
     const pdfDoc = new pdfkit();
     const buffers: any[] = [];
-    const pdfDirectory = path.resolve(__dirname, '../../pdfs');
-    const pdfPath = path.join(pdfDirectory, `${nameUser.userId}.pdf`);
 
-    // Criar diretório se não existir
-    if (!fs.existsSync(pdfDirectory)) {
-      fs.mkdirSync(pdfDirectory, { recursive: true });
-    }
-
-    pdfDoc.pipe(fs.createWriteStream(pdfPath));
 
     pdfDoc.on('data', buffers.push.bind(buffers));
     pdfDoc.on('end', async () => {
       const pdfData = Buffer.concat(buffers);
-      console.log('PDF data length:', pdfData.length); // Adicione esta linha para depuração
 
-      try {
-        await this.prisma.pdfStorage.create({
-          data: {
-            userId: nameUser.userId,
-            pdfBlob: pdfData
-          }
-        });
-        console.log('PDF stored in database'); // Adicione esta linha para depuração
-      } catch (error) {
-        console.error('Error storing PDF in database:', error); // Adicione esta linha para depuração
-      }
+      // Salva o PDF no MongoDB
+      await this.prisma.pdfStorage.create({
+        data: {
+          userId: nameUser.userId,
+          pdfBlob: pdfData,
+        },
+      });
     });
+   
 
     // Definindo cores
     const colors = ['#000000'];
@@ -101,7 +89,7 @@ class GeneratePdfService {
 
     pdfDoc.end();
 
-    return pdfPath;
+    return;
   }
 }
 
