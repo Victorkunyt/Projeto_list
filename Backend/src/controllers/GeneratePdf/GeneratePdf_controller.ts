@@ -16,7 +16,7 @@ class GeneratePDFController {
 
     try {
       const pdfPath = await PdfService.execute(userData);
-      const downloadLink = `https://${request.hostname}/pdfs/${userData.userId}.pdf`;
+      const downloadLink = `${request.protocol}://${request.hostname}/pdfs/${userData.userId}.pdf`;
       response.send({ message: 'PDF generated successfully', downloadLink });
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -26,7 +26,3 @@ class GeneratePDFController {
 }
 
 export { GeneratePDFController };
-
-
-// id Int @id @default(autoincrement()) 
-// id String @id @default(uuid())

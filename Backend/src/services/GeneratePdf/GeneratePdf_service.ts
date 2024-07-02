@@ -30,20 +30,32 @@ class GeneratePdfService {
 
     const pdfDoc = new pdfkit();
     const buffers: any[] = [];
-    const pdfPath = path.resolve(__dirname, `../../pdfs/${nameUser.userId}.pdf`);
+    const pdfDirectory = path.resolve(__dirname, '../../pdfs');
+    const pdfPath = path.join(pdfDirectory, `${nameUser.userId}.pdf`);
+
+    // Criar diretório se não existir
+    if (!fs.existsSync(pdfDirectory)) {
+      fs.mkdirSync(pdfDirectory, { recursive: true });
+    }
 
     pdfDoc.pipe(fs.createWriteStream(pdfPath));
 
     pdfDoc.on('data', buffers.push.bind(buffers));
     pdfDoc.on('end', async () => {
       const pdfData = Buffer.concat(buffers);
-      // Aqui você pode armazenar o pdfData como um blob no banco de dados ou em outro serviço
-      await this.prisma.pdfStorage.create({
-        data: {
-          userId: nameUser.userId,
-          pdfBlob: pdfData
-        }
-      });
+      console.log('PDF data length:', pdfData.length); // Adicione esta linha para depuração
+
+      try {
+        await this.prisma.pdfStorage.create({
+          data: {
+            userId: nameUser.userId,
+            pdfBlob: pdfData
+          }
+        });
+        console.log('PDF stored in database'); // Adicione esta linha para depuração
+      } catch (error) {
+        console.error('Error storing PDF in database:', error); // Adicione esta linha para depuração
+      }
     });
 
     // Definindo cores
