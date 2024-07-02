@@ -41,8 +41,9 @@ routes.forEach(route => {
   app.register(route);
 });
 
+// Configuração para servir arquivos estáticos (PDFs gerados)
 app.register(fastifyStatic, {
-  root: path.join(__dirname, 'pdfs'),
+  root: path.join(__dirname, 'pdfs'),  // Certifique-se de que 'pdfs' é o diretório correto
   prefix: '/pdfs/',
 });
 
