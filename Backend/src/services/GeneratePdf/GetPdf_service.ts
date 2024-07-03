@@ -1,6 +1,7 @@
 import { userIdOnlyName } from "../../validators/PdfGenerator/PdfGenerator_Validator";
 import { PrismaClient } from "@prisma/client";
 import { UserNames } from "../../types/PdfGenerator_types";
+import { ExistsError } from "../../error/ExistsError";
 
 class GetPdf {
   private prisma: PrismaClient;
@@ -20,7 +21,7 @@ class GetPdf {
     });
 
     if (!pdfRecord) {
-      throw new Error("PDF not found");
+      throw new ExistsError("PDF not found");
     }
 
     return Buffer.from(pdfRecord.pdfBlob); // Convertendo para Buffer
