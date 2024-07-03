@@ -2,6 +2,7 @@ import { GetPdf } from "../../services/GeneratePdf/GetPdf_service";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { UserNames } from '../../types/PdfGenerator_types';
 import { PrismaClient } from "@prisma/client";
+import { ExistsError } from "../../error/ExistsError";
 
 class GetPdfController {
   private prisma: PrismaClient;
@@ -21,8 +22,11 @@ class GetPdfController {
       response.header('Content-Disposition', `attachment; filename=${userData.userId}_report.pdf`);
       response.send(pdfBuffer);
     } catch (error) {
-      console.error('Error fetching PDF:', error);
-      response.status(500).send('Internal Server Error');
+      if (error instanceof ExistsError) {
+        response.status(400).send({ error: error.message });
+      } else {
+        response.send(error)
+      }
     }
   }
 }

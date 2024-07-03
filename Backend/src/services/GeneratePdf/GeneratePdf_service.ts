@@ -5,6 +5,7 @@ import path from 'path';
 import { UserNames } from '../../types/PdfGenerator_types';
 import { userIdOnlyName } from '../../validators/PdfGenerator/PdfGenerator_Validator';
 import { PrismaClient } from "@prisma/client";
+import { ExistsError } from '../../error/ExistsError';
 
 class GeneratePdfService {
   private prisma: PrismaClient;
@@ -58,12 +59,16 @@ class GeneratePdfService {
       });
     });
 
-    await this.prisma.pdfStorage.create({
+    const createPDF = await this.prisma.pdfStorage.create({
       data: {
         userId: nameUser.userId,
         pdfBlob: pdfData,
       },
     });
+
+    if (!createPDF) {
+      throw new ExistsError('PDF não criado!')
+    }
 
     return pdfPath;
   }

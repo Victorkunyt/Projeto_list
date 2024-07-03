@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { GeneratePdfService } from "../../services/GeneratePdf/GeneratePdf_service";
 import { UserNames } from '../../types/PdfGenerator_types';
 import { PrismaClient } from "@prisma/client";
+import { ExistsError } from "../../error/ExistsError";
 
 class GeneratePDFController {
   private prisma: PrismaClient;
@@ -18,8 +19,11 @@ class GeneratePDFController {
        await PdfService.execute(userData);
       response.send({ message: 'PDF generated successfully' });
     } catch (error) {
-      console.error('Error generating PDF:', error);
-      response.status(500).send('Internal Server Error');
+      if (error instanceof ExistsError) {
+        response.status(400).send({ error: error.message });
+      } else {
+        response.send(error)
+      }
     }
   }
 }
