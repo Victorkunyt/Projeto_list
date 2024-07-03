@@ -59,16 +59,14 @@ class GeneratePdfService {
       });
     });
 
-    const createPDF = await this.prisma.pdfStorage.create({
+    await this.prisma.pdfStorage.create({
       data: {
         userId: nameUser.userId,
         pdfBlob: pdfData,
       },
     });
 
-    if (!createPDF) {
-      throw new ExistsError('PDF não criado!')
-    }
+
 
     return pdfPath;
   }
