@@ -1,7 +1,4 @@
-
 import pdfkit from 'pdfkit';
-import fs from 'fs';
-import path from 'path';
 import { UserNames } from '../../types/PdfGenerator_types';
 import { userIdOnlyName } from '../../validators/PdfGenerator/PdfGenerator_Validator';
 import { PrismaClient } from "@prisma/client";
@@ -14,7 +11,7 @@ class GeneratePdfService {
     this.prisma = prisma;
   }
 
-  async execute(nameUser: UserNames): Promise<string> {
+  async execute(nameUser: UserNames): Promise<void> {
     userIdOnlyName(nameUser);
 
     const categories = await this.prisma.category.findMany({
@@ -27,16 +24,26 @@ class GeneratePdfService {
     });
 
     if (!categories || categories.length === 0) {
-      throw new Error(`Não foram encontradas categorias para o UserId fornecido.`);
+      throw new ExistsError(`Não foram encontradas categorias para o UserId fornecido.`);
     }
 
     const pdfDoc = new pdfkit();
-    const pdfPath = path.join(__dirname, `../../pdfs/${nameUser.userId}.pdf`);
-    const writeStream = fs.createWriteStream(pdfPath);
+    const buffers: any[] = [];
 
-    pdfDoc.pipe(writeStream);
+    pdfDoc.on('data', buffers.push.bind(buffers));
+    pdfDoc.on('end', async () => {
+      const pdfData = Buffer.concat(buffers);
 
-    // Configuração do conteúdo do PDF...
+      // Salva o PDF no MongoDB
+      await this.prisma.pdfStorage.create({
+        data: {
+          userId: nameUser.userId,
+          pdfBlob: pdfData,
+        },
+      });
+    });
+
+    // Configuração do conteúdo do PDF
     pdfDoc.fontSize(16).text('Relatório de Tarefas', { align: 'center' });
 
     // Exemplo de conteúdo
@@ -49,28 +56,7 @@ class GeneratePdfService {
     });
 
     pdfDoc.end();
-
-    // Salva o PDF no MongoDB
-    const pdfData = await new Promise<Buffer>((resolve, reject) => {
-      const buffers: any[] = [];
-      pdfDoc.on('data', buffers.push.bind(buffers));
-      pdfDoc.on('end', () => {
-        resolve(Buffer.concat(buffers));
-      });
-    });
-
-    await this.prisma.pdfStorage.create({
-      data: {
-        userId: nameUser.userId,
-        pdfBlob: pdfData,
-      },
-    });
-
-
-
-    return pdfPath;
   }
 }
 
 export { GeneratePdfService };
-
