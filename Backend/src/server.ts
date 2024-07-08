@@ -1,8 +1,6 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyJwt from '@fastify/jwt';
-import path from 'path';
-import fastifyStatic from '@fastify/static';
 import { routesUsers } from "./routes/Users";
 import { routesTask } from "./routes/Tasks";
 import { routesCategory } from "./routes/Category";
@@ -41,11 +39,6 @@ routes.forEach(route => {
   app.register(route);
 });
 
-// Servir arquivos estáticos (PDFs gerados)
-app.register(fastifyStatic, {
-  root: path.join(__dirname, 'pdfs'),
-  prefix: '/pdfs/',
-});
 
 const start = async () => {
   try {

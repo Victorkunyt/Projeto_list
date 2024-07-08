@@ -6,4 +6,10 @@ userId: string
 
 }
 
-export {PayloadCategory}
+interface IdCategoria {
+    categoryId: string
+
+}
+
+
+export {PayloadCategory,IdCategoria}
