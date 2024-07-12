@@ -3,6 +3,7 @@ import { UsersCreateController } from "../controllers/Users/RegisterUsers_contro
 import { GetUsersAllController } from "../controllers/Users/GetAllUsers_controller";
 import { DeleteUsersAllController } from "../controllers/Users/DeleteAllUser_controller";
 import { LoginUserController } from "../controllers/Users/LoginUsers_controller";
+import { GetDataUsersController } from "../controllers/Users/GetDataUsers_controller";
 import { AuthMiddleware } from "../middleware/auth";
 import { PrismaClient } from "@prisma/client";
 
@@ -31,6 +32,10 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
   fastify.get("/getUsersAll", async(request: FastifyRequest,reply: FastifyReply) => {
     return new GetUsersAllController(prisma).handle(request,reply)
  })
+
+ fastify.get("/getDataUsers", async(request: FastifyRequest,reply: FastifyReply) => {
+  return new GetDataUsersController(prisma).handle(request,reply)
+})
 
   fastify.delete("/deleteUsers", async(request: FastifyRequest,reply: FastifyReply) => {
     return new DeleteUsersAllController(prisma).handle(request,reply)
