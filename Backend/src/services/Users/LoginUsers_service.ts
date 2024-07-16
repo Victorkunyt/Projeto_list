@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcryptjs';
 import { GeneratorTokenProvider } from "../../middleware/generate";
-import { GenerateRefrashToken } from "../../middleware/refresh";
+import { GenerateRefreshToken } from "../../middleware/refresh";
 import { LogType } from "../../types/Login_types";
 import { LoginCampos } from "../../validators/Login/LoginValidador";
 import { ExistsError } from "../../error/ExistsError";
@@ -38,7 +38,7 @@ class LoginService {
         const gerneratorTokenProvider = new GeneratorTokenProvider()
         const token = await gerneratorTokenProvider.execute(userData)
 
-        const generateRefreshToken = new GenerateRefrashToken(this.prisma);
+        const generateRefreshToken = new GenerateRefreshToken(this.prisma);
         const refreshToken = await generateRefreshToken.execute(user.id);
 
         return { token, refreshToken }
