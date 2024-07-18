@@ -1,7 +1,7 @@
 import {FastifyInstance,FastifyPluginOptions,FastifyRequest,FastifyReply} from "fastify";
 import { UsersCreateController } from "../controllers/Users/RegisterUsers_controller";
 import { GetUsersAllController } from "../controllers/Users/GetAllUsers_controller";
-import { DeleteUsersAllController } from "../controllers/Users/DeleteAllUser_controller";
+import { DeleteUsersController } from "../controllers/Users/DeleteAllUser_controller";
 import { LoginUserController } from "../controllers/Users/LoginUsers_controller";
 import { GetDataUsersController } from "../controllers/Users/GetDataUsers_controller";
 import { AuthMiddleware } from "../middleware/auth";
@@ -30,7 +30,8 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
     fastify.addHook("preHandler", AuthMiddleware);
 
   fastify.get("/getUsersAll", async(request: FastifyRequest,reply: FastifyReply) => {
-    return new GetUsersAllController(prisma).handle(request,reply)
+    //return new GetUsersAllController(prisma).handle(request,reply)
+   reply.send({ message: "Endpoint Disabled" }); 
  })
 
  fastify.get("/getDataUsers", async(request: FastifyRequest,reply: FastifyReply) => {
@@ -38,7 +39,7 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
 })
 
   fastify.delete("/deleteUsers", async(request: FastifyRequest,reply: FastifyReply) => {
-    return new DeleteUsersAllController(prisma).handle(request,reply)
+    return new DeleteUsersController(prisma).handle(request,reply)
 })
 
 

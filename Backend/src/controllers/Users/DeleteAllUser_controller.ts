@@ -1,8 +1,8 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { DeleteUsersAllService } from "../../services/Users/DeleteUserAll_service";
+import { DeleteUsersService } from "../../services/Users/DeleteUsers_service";
 import { PrismaClient } from "@prisma/client";
-
-class DeleteUsersAllController {
+import { Iduser } from "../../types/Task_types";
+class DeleteUsersController {
     private prisma: PrismaClient;
 
     constructor(prisma: PrismaClient) {
@@ -10,12 +10,13 @@ class DeleteUsersAllController {
     }
     async handle(request: FastifyRequest,response: FastifyReply): Promise<void> {
    
-            const serviceUsersDelete = new DeleteUsersAllService(this.prisma);
-            await serviceUsersDelete.execute();
+            const userData = request.query as Iduser
+            const serviceUsersDelete = new DeleteUsersService(this.prisma);
+            await serviceUsersDelete.execute(userData);
 
             response.code(204);
 }
     }
 
 
-export { DeleteUsersAllController };
+export { DeleteUsersController };

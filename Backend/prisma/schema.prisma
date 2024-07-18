@@ -70,6 +70,7 @@ model Category {
 model RefreshToken {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   expiresIn    Int
+  createdAt    DateTime  @default(now())
   User         User      @relation(fields: [UserId], references: [id])
   UserId       String    @map("_userId") @unique @db.ObjectId
   @@map("RefreshToken")

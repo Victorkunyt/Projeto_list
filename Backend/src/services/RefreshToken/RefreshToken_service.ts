@@ -2,6 +2,7 @@ import { GeneratorTokenProvider } from "../../middleware/generate";
 import {LogType} from "../../types/Login_types";
 import { RefreshLine } from "../../validators/Login/LoginValidador";
 import { PrismaClient } from "@prisma/client";
+import { ExistsError } from "../../error/ExistsError";
 
 
 class Refresh_token {
@@ -25,7 +26,7 @@ const Tokenrefresh = await this.prisma.refreshToken.findFirst({
 })
 
 if (!Tokenrefresh) {
-    throw new Error('Id inválido')
+    throw new ExistsError('Id inválido')
 }
 
 
