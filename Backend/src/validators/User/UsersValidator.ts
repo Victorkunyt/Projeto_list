@@ -4,18 +4,19 @@ import { ExistsError } from '../../error/ExistsError';
 
 
 const IdUser = (userData: Partial <UserTypes>) => {
-
+if (!userData.holderid){
     if (userData.userId === undefined) {
-      throw new ExistsError("O Parametro userId não foi definido");
+      throw new ExistsError("O Parametro userId ou o holderid não foi definido");
     }
     
     if (!userData.userId.trim()) {
-      throw new ExistsError("O Parametro userId não pode ser vazio ou nulo");
+      throw new ExistsError("Passar parâmetro userId ou holderid");
     }
     
     if (typeof userData.userId !== 'string' || userData.userId.length !== 24){
       throw new ExistsError("userId inválido");
     }
+  }
   
   }
   

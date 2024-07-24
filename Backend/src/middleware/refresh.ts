@@ -10,7 +10,7 @@ class GenerateRefreshToken {
 
   async execute(UserId: string) {
     try {
-      const expiresIn = dayjs().add(6000, "minutes").unix(); // 60 Minutos
+      const expiresIn = dayjs().add(6000, "minute").unix(); // 60 Minutos
       const generateRefreshToken = await this.prisma.refreshToken.create({
         data: {
           UserId,

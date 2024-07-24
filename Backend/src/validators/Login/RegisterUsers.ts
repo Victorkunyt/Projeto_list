@@ -27,11 +27,18 @@ const HolderidphoneValidator = (userData: Partial<UserTypes>) => {
 
   const cpfvalidator = require('cpf-validator-tmc');
 
-  
-  if (!cpfvalidator(userData.holderid.trim())) {
+  const holderid = userData.holderid.trim();
+  const onlyNumbers = /^\d+$/;
+
+  if (!onlyNumbers.test(holderid)) {
+      throw new ExistsError("O holderId deve conter apenas números.");
+  }
+
+  if (!cpfvalidator(holderid)) {
       throw new ExistsError('CPF inválido');
   }
 };
+
 
 const CellphoneValidator = (userData: Partial<UserTypes>) => {
   if (userData.cellphone === undefined) {
