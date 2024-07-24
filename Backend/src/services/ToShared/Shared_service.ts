@@ -2,9 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { LineShared } from "../../types/Shared_types";
 import { SharedCampos } from "../../validators/ToShared/TosharedValidator";
 import { registerNotification } from "../../functions/SendNotification";
-
-
-const prisma = new PrismaClient();
+import { ExistsError } from "../../error/ExistsError";
 
 class ToSharedService {
 
@@ -23,12 +21,12 @@ class ToSharedService {
         },
     });
     if (!task) {
-        throw new Error("Tarefa não encontrada");
+        throw new ExistsError("Tarefa não encontrada");
     }
 
     // Validar se o usuário está tentando compartilhar a tarefa consigo mesmo
     if (task.userId === userData.idUser) {
-        throw new Error("Usuário não pode compartilhar a tarefa consigo mesmo");
+        throw new ExistsError("Usuário não pode compartilhar a tarefa consigo mesmo");
     }
 
     // Validar se o usuário existe
@@ -38,12 +36,12 @@ class ToSharedService {
         },
     });
     if (!userToShareWith) {
-        throw new Error("Usuário para compartilhar não encontrado");
+        throw new ExistsError("Usuário para compartilhar não encontrado");
     }
 
     // Validar se a categoria da tarefa é a mesma que a categoria especificada para compartilhamento
     if (task.categoryId !== userData.categoryId) {
-        throw new Error("A categoria da tarefa não coincide com a Task especificada para compartilhamento");
+        throw new ExistsError("A categoria da tarefa não coincide com a Task especificada para compartilhamento");
     }
 
 
@@ -57,7 +55,7 @@ class ToSharedService {
     });
 
     if (existTaskUser) {
-        throw new Error("Usuário já tem a tarefa compartilhada");
+        throw new ExistsError("Usuário já tem a tarefa compartilhada");
     }
 
     // Compartilhar task com outro usuário

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Iduser } from '../../types/Task_types';
 import { IdUsuario } from "../../validators/Task/TaskIdValidator";
+import { ExistsError } from "../../error/ExistsError";
 
 class DeleteTaskService {
 
@@ -19,7 +20,7 @@ class DeleteTaskService {
     });
 
     if (!findId) {
-      throw new Error("Id da Task não existe na base de dados");
+      throw new ExistsError("Id da Task não existe na base de dados");
     }
     const DeletetaskUsers = await this.prisma.task.delete({
       where: {

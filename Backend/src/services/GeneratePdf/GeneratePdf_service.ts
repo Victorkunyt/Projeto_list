@@ -46,7 +46,7 @@ class GeneratePdfService {
     // Configuração do conteúdo do PDF
     pdfDoc.fontSize(16).text('Relatório de Tarefas', { align: 'center' });
 
-    // Exemplo de conteúdo
+    //  conteúdo para o pdf pegar
     categories.forEach((category, index) => {
       pdfDoc.text(`Categoria ${index + 1}: ${category.nameCategory}`);
       category.tasks.forEach(task => {

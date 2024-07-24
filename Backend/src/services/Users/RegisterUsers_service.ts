@@ -9,6 +9,7 @@ import {
   GenderValidator,
   PasswordValidator,
 } from "../../validators/Login/RegisterUsers";
+import { ExistsError } from "../../error/ExistsError";
 import { registerNotification } from "../../functions/SendNotification";
 
 class UsersService {
@@ -36,7 +37,7 @@ class UsersService {
     });
 
     if (VerificationEmail) {
-      throw new Error(
+      throw new ExistsError(
         "Email ,já esta registrado na base, por favor verifique seus dados"
       );
     }
@@ -48,7 +49,7 @@ class UsersService {
       });
   
       if (VerificationCellPhone) {
-        throw new Error(
+        throw new ExistsError(
           "CellPhone ,já esta registrado na base, por favor verifique seus dados"
         );
       }
@@ -60,7 +61,7 @@ class UsersService {
       });
   
       if (VerificationHolderid) {
-        throw new Error(
+        throw new ExistsError(
           "holderId ,já esta registrado na base, por favor verifique seus dados"
         );
       }

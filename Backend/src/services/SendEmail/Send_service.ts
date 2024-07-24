@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { sendEmailLines } from "../../types/SendEmail_types";
 import { emailSendValidator } from "../../validators/SendEmail/Sendemail_validator";
+import { ExistsError } from "../../error/ExistsError";
 
 
 class SendEmailService {
@@ -13,7 +14,7 @@ class SendEmailService {
     
     async execute(userData: sendEmailLines) {
         if (!userData.service || !userData.user || !userData.pass || !userData.from || !userData.to || !userData.subject) {
-            throw new Error('Todos os campos são obrigatórios passar informações');
+            throw new ExistsError('Todos os campos são obrigatórios passar informações');
         }
 
         emailSendValidator(userData)
@@ -29,7 +30,7 @@ class SendEmailService {
         })
 
         if (ValidationEmails.length === 0) {
-         throw new Error('Email não encontrado no banco de dados')
+         throw new ExistsError('Email não encontrado no banco de dados')
         }
 
         const user = ValidationEmails[0];
@@ -46,7 +47,7 @@ class SendEmailService {
             });
 
             if (!transport) {
-                throw new Error('Erro ao criar o transporte de e-mail');
+                throw new ExistsError('Erro ao criar o transporte de e-mail');
             }
 
              await transport.sendMail({

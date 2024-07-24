@@ -37,7 +37,7 @@ class GeneratorTokenProvider {
 
         // Gera o token JWT com os dados criptografados
         const token = jwt.sign({ userData: encryptedUserData }, 'suaChaveSecreta', {
-            expiresIn: '1h',
+            expiresIn: '1m',
         });
 
         return token;

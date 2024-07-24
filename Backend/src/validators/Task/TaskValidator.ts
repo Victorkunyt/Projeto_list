@@ -1,13 +1,14 @@
 import { TasksTypes } from "../../types/Task_types";
+import { ExistsError } from "../../error/ExistsError";
 
 const TaskCampos = (userData: Partial<TasksTypes>) => {
     
   if (userData.nametask === undefined) {
-    throw new Error("O Campo Nome da task não foi definido");
+    throw new ExistsError("O Campo Nome da task não foi definido");
   }
 
   if (!userData.nametask.trim()) {
-    throw new Error("O Campo Nome da task não pode estar em branco");
+    throw new ExistsError("O Campo Nome da task não pode estar em branco");
   }
 };
 

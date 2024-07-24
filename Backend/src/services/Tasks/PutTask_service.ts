@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { TasksTypes,Iduser } from "../../types/Task_types";
-import { TaskID,IdUsuario } from "../../validators/Task/TaskIdValidator";
+import { IdUsuario } from "../../validators/Task/TaskIdValidator";
 import { TaskCampos } from "../../validators/Task/TaskValidator";
+import { ExistsError } from "../../error/ExistsError";
 
 class PutTaskService {
   private prisma: PrismaClient;
@@ -21,7 +22,7 @@ class PutTaskService {
     });
 
     if (!findId) {
-      throw new Error("Id não existe na base de dados");
+      throw new ExistsError("Id não existe na base de dados");
     }
     const PuttaskUsers = await this.prisma.task.update({
       where: {

@@ -13,8 +13,8 @@ export async function AuthMiddleware(request: FastifyRequest, reply: FastifyRepl
 
     try {
         jwt.verify(token, "suaChaveSecreta");
-    } catch (error) {
-        if (error === "TokenExpiredError") {
+    } catch (error: any) {
+        if (error.name === "TokenExpiredError") {
             reply.code(401).send({ message: "Token expirado" });
         } else {
             reply.code(401).send({ message: "Token de autenticação inválido" });
