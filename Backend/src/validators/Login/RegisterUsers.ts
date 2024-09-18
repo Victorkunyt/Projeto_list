@@ -48,6 +48,12 @@ const CellphoneValidator = (userData: Partial<UserTypes>) => {
   if (userData.cellphone.length !== 11) {
     throw new ExistsError(`O Numero de Celular tem que ter 11 Digitos`);
   }
+
+  const isNumeric = /^\d+$/;
+
+if (!isNumeric.test(userData.cellphone)) {
+  throw new ExistsError(`O Número de Celular deve conter apenas dígitos`);
+}
 };
 
 const emailValidator = (userData: Partial<UserTypes>) => {
@@ -60,7 +66,7 @@ const emailValidator = (userData: Partial<UserTypes>) => {
     !specialCaracterRegex.test(userData.email) ||
     !userData.email?.includes(".")
   ) {
-    throw new ExistsError(`O Email precisa possuir (.,@)`);
+    throw new ExistsError(`O Email precisa possuir (.@)`);
   }
 };
 
