@@ -80,12 +80,8 @@ class UsersService {
       },
     });
 
-    const GetUsers = await this.prisma.user.findFirst({
-      where: userData.userId,
-    });
-
-    if (GetUsers?.id) {
-      await registerNotification(this.prisma, "Sua Conta foi registrada com Sucesso", GetUsers.id);
+    if (newUsers.id) {
+      await registerNotification(this.prisma, "Sua Conta foi registrada com Sucesso", newUsers.id);
     }
     
 

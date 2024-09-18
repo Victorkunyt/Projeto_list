@@ -31,7 +31,7 @@ class DeleteUsersService {
     // Exclua todas as notificações associadas ao usuário
     await this.prisma.notification.deleteMany({
       where: {
-        id: userData.id,
+        recipientId: userData.id,
       },
     });
 
