@@ -30,8 +30,8 @@ export async function routesUsers(fastify: FastifyInstance, options: FastifyPlug
     fastify.addHook("preHandler", AuthMiddleware);
 
   fastify.get("/getUsersAll", async(request: FastifyRequest,reply: FastifyReply) => {
-    //return new GetUsersAllController(prisma).handle(request,reply)
-   reply.send({ message: "Endpoint Disabled" }); 
+
+    return new GetUsersAllController(prisma).handle(request,reply)
  })
 
  fastify.get("/getDataUsers", async(request: FastifyRequest,reply: FastifyReply) => {
