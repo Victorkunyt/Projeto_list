@@ -16,9 +16,9 @@ class UsersCreateController {
    
             const userData = request.body as UserTypes; 
             const serviceUsers = new UsersService(this.prisma);
-            await serviceUsers.execute(userData);
+            const responseData = await serviceUsers.execute(userData);
 
-            response.code(201)
+            response.code(201).send({ id: responseData.id });
 }
     }
 
