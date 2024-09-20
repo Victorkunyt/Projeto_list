@@ -13,9 +13,9 @@ class TaskCreateController {
    
             const userData = request.body as TasksTypes
             const TaskUsers = new TaskService(this.prisma);
-            await TaskUsers.execute(userData);
+            const responseData = await TaskUsers.execute(userData);
 
-            response.code(201);
+            response.code(201).send({ id: responseData.id });
 }
     }
 
