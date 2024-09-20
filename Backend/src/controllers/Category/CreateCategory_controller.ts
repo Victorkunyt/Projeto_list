@@ -16,8 +16,8 @@ class CategoryCreateController {
     const Category = new CategoryService(this.prisma);
 
     try {
-      await Category.execute(userData);
-      response.code(201);
+      const responseData = await Category.execute(userData);
+      response.code(201).send({ id: responseData.id });
     } catch (error) {
       if (error instanceof ExistsError) {
         response.status(400).send({ error: error.message });
