@@ -10,9 +10,14 @@ import { routesNotification } from "./routes/Notification";
 import { routesPdf } from "./routes/GeneratePdf";
 import { routesNewpassword } from "./routes/Pass";
 import { routesSendEmail } from "./routes/SendEmail";
+import { routesImage } from "./routes/Image";
+import fastifyMultipart from 'fastify-multipart';
 
 const app = fastify({ logger: true });
 const PORT = parseInt(`${process.env.PORT || 3333}`);
+
+// Plugin para permitir o upload de arquivos.
+app.register(fastifyMultipart);
 
 // Plugin do CORS
 app.register(cors);
@@ -32,7 +37,8 @@ const routes = [
   routesNotification, 
   routesPdf, 
   routesNewpassword, 
-  routesSendEmail
+  routesSendEmail,
+  routesImage,
 ];
 
 routes.forEach(route => {
