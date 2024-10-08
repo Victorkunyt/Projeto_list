@@ -12,12 +12,6 @@ class UploadImageService {
   // Método responsável por armazenar a imagem no banco de dados
   async execute(file: MultipartFile): Promise<void> {
     // Tipos MIME permitidos
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-
-    // Valida se o tipo MIME do arquivo está entre os permitidos
-    if (!allowedMimeTypes.includes(file.mimetype)) {
-      throw new Error("Tipo de arquivo não permitido. Apenas imagens JPEG e PNG são aceitas.");
-    }
 
     // Converte a imagem para buffer
     const imageBuffer = await file.toBuffer();

@@ -12,14 +12,21 @@ class UploadImageController {
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const file = await request.file(); // Captura o arquivo do form-data
-
+  
     if (!file) {
       reply.status(400).send({ error: 'Arquivo não encontrado no form-data' });
       return;
     }
-
+  
+    // Verifica o tipo MIME aqui, caso deseje validar antes de passar ao serviço
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      reply.status(400).send({ error: 'Tipo de arquivo não permitido. Apenas imagens JPEG e PNG são aceitas.' });
+      return;
+    }
+  
     const uploadImageService = new UploadImageService(this.prisma);
-
+  
     try {
       // Passa o arquivo diretamente para o serviço
       await uploadImageService.execute(file);
@@ -29,12 +36,12 @@ class UploadImageController {
       if (error instanceof ExistsError) {
         reply.status(400).send({ error: error.message });
       } else {
-        // Inclua logging adicional se necessário para debugging
         console.error('Erro ao enviar imagem:', error); // Adicione logging
         reply.status(500).send({ error: 'Erro no servidor', details: error });
       }
     }
   }
+  
 }
 
 export { UploadImageController };
