@@ -11,6 +11,14 @@ class UploadImageService {
 
   // Método responsável por armazenar a imagem no banco de dados
   async execute(file: MultipartFile): Promise<void> {
+    // Tipos MIME permitidos
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+    // Valida se o tipo MIME do arquivo está entre os permitidos
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      throw new Error("Tipo de arquivo não permitido. Apenas imagens JPEG e PNG são aceitas.");
+    }
+
     // Verifica se já existe uma imagem com o mesmo MIME type (opcional)
     const existingImage = await this.prisma.imageStorage.findFirst({
       where: { mimeType: file.mimetype },
@@ -24,7 +32,7 @@ class UploadImageService {
     const imageBuffer = await file.toBuffer();
 
     // Salva a imagem no banco de dados
-     await this.prisma.imageStorage.create({
+    await this.prisma.imageStorage.create({
       data: {
         imageBlob: imageBuffer,     // Armazena a imagem em formato binário
         mimeType: file.mimetype,    // Armazena o tipo MIME da imagem
@@ -33,7 +41,7 @@ class UploadImageService {
       },
     });
 
-    return ;
+    return;
   }
 }
 
