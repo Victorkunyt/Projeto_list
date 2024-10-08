@@ -19,9 +19,9 @@ class UploadImageController {
     }
   
     // Verifica o tipo MIME aqui, caso deseje validar antes de passar ao serviço
-    const allowedMimeTypes = ['image/jpeg','image/jpg'];
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     if (!allowedMimeTypes.includes(file.mimetype)) {
-      reply.status(400).send({ error: 'Tipo de arquivo não permitido. Apenas imagens JPEG e JPG são aceitas.'});
+      reply.status(400).send({ error: 'Tipo de arquivo não permitido. Apenas imagens JPEG e PNG são aceitas.' });
       return;
     }
   
