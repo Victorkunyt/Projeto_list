@@ -13,10 +13,10 @@ class UploadImageController {
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const file = await request.file(); // Captura o arquivo do form-data
 
-    if (!file) {
-      reply.status(400).send({ error: 'Arquivo não encontrado no form-data' });
-      return;
-    }
+    // if (!file) {
+    //   reply.status(400).send({ error: 'Arquivo não encontrado no form-data' });
+    //   return;
+    // }
 
     const uploadImageService = new UploadImageService(this.prisma);
 
