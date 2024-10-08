@@ -11,7 +11,7 @@ class UploadImageService {
 
   // Ajusta a assinatura para retornar o tipo correto
   async execute(userData: paramImage): Promise<ImageStorage> {
-    const allowedMimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+    const allowedMimeTypes = ['png', 'jpg', 'jpeg'];
 
     if (!userData.file) {
       throw new ExistsError('Arquivo não inserido');
