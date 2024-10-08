@@ -19,6 +19,9 @@ class UploadImageService {
       throw new Error("Tipo de arquivo não permitido. Apenas imagens JPEG e PNG são aceitas.");
     }
 
+    // Converte a imagem para buffer
+    const imageBuffer = await file.toBuffer();
+
     // Verifica se já existe uma imagem com o mesmo MIME type (opcional)
     const existingImage = await this.prisma.imageStorage.findFirst({
       where: { mimeType: file.mimetype },
@@ -27,9 +30,6 @@ class UploadImageService {
     if (existingImage) {
       throw new ExistsError("Uma imagem com o mesmo tipo MIME já existe.");
     }
-
-    // Converte a imagem para buffer
-    const imageBuffer = await file.toBuffer();
 
     // Salva a imagem no banco de dados
     await this.prisma.imageStorage.create({
@@ -40,8 +40,6 @@ class UploadImageService {
         updatedAt: new Date(),
       },
     });
-
-    return;
   }
 }
 
