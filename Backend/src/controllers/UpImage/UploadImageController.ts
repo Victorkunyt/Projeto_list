@@ -18,20 +18,19 @@ class UploadImageController {
       return;
     }
 
-    const userData = {
-      file
-    };
-
     const uploadImageService = new UploadImageService(this.prisma);
 
     try {
-      await uploadImageService.execute(userData);
+      // Passa o arquivo diretamente para o serviço
+      await uploadImageService.execute(file); 
+      
       reply.code(201).send({ message: 'Imagem enviada com sucesso!' });
     } catch (error) {
       if (error instanceof ExistsError) {
         reply.status(400).send({ error: error.message });
       } else {
-        reply.send(error);
+        // Inclua logging adicional se necessário para debugging
+        reply.status(500).send({ error: 'Erro no servidor', details: error });
       }
     }
   }
