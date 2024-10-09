@@ -19,7 +19,7 @@ class UploadImageService {
     // Verifica se já existe uma imagem com o mesmo MIME type (opcional)
     const existingImage = await this.prisma.imageStorage.findFirst({
       where: { 
-        userId: userData,
+        //userId: userData,
         mimeType: file.mimetype },
     });
 
