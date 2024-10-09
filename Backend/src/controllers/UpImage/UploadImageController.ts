@@ -14,10 +14,9 @@ class UploadImageController {
     const file = await request.file(); // Captura o arquivo do form-data
   
     if (!file) {
-      reply.status(400).send({ error: 'Arquivo não encontrado no form-data' });
+      reply.status(400).send({ error: 'Arquivo não encontrado no form-data ou acima de 300 KB(Mongo DB)' });
       return;
     }
-  
     // Verifica o tipo MIME aqui, caso deseje validar antes de passar ao serviço
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     if (!allowedMimeTypes.includes(file.mimetype)) {
