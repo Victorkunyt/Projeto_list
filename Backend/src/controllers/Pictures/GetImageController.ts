@@ -16,13 +16,17 @@ class GetImageController {
     const imageService = new GetImageService(this.prisma);
 
     try {
-      const pdfBuffer = await imageService.execute(userData);
-      response.send(pdfBuffer);
+      const existingImage = await imageService.execute(userData);
+
+      // Definindo o tipo MIME da imagem para a resposta
+      response.header('Content-Type', existingImage.mimeType);
+      response.send(existingImage.imageBlob); // Enviando o buffer da imagem
     } catch (error) {
       if (error instanceof ExistsError) {
-        response.status(400).send({ error: error.message });
+        response.status(404).send({ error: error.message }); // 404 para recurso não encontrado
       } else {
-        response.send(error)
+        console.error('Erro ao buscar a imagem:', error);
+        response.status(500).send({ error: 'Erro no servidor', details: error });
       }
     }
   }
