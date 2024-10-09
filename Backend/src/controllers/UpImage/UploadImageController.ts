@@ -24,6 +24,14 @@ class UploadImageController {
       reply.status(400).send({ error: 'Tipo de arquivo não permitido. Apenas imagens JPEG e PNG são aceitas.' });
       return;
     }
+    // Define o tamanho máximo do arquivo (5 MB neste exemplo)
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
+    // Converte o arquivo para buffer para calcular o tamanho
+    const imageBuffer = await file.toBuffer();
+    if (imageBuffer.length > maxSizeInBytes) {
+      reply.status(400).send({ error: 'O tamanho do arquivo excede o limite permitido de 5 MB.' });
+      return;
+    }
   
     const uploadImageService = new UploadImageService(this.prisma);
   
