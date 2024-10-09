@@ -11,18 +11,18 @@ class UploadImageService {
 
   // Método responsável por armazenar a imagem no banco de dados
   async execute(file: MultipartFile): Promise<void> {
+    // Tipos MIME permitidos
+
     // Converte a imagem para buffer
     const imageBuffer = await file.toBuffer();
 
     // Verifica se já existe uma imagem com o mesmo MIME type (opcional)
     const existingImage = await this.prisma.imageStorage.findFirst({
-      where: { 
-        mimeType: file.mimetype },
+      where: { mimeType: file.mimetype },
     });
 
- 
     if (existingImage) {
-      throw new ExistsError("Uma imagem com o mesmo tipo MIME já existe para esse User");
+      throw new ExistsError("Uma imagem com o mesmo tipo MIME já existe.");
     }
 
     // Salva a imagem no banco de dados
