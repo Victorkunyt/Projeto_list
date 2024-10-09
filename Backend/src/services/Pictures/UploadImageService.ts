@@ -11,8 +11,8 @@ class UploadImageService {
   }
 
   // Método responsável por armazenar a imagem no banco de dados
-  async execute(file: MultipartFile,userData: any): Promise<void> {
-    IMGUserid(userData)
+  async execute(file: MultipartFile): Promise<void> {
+   // IMGUserid(userData)
     // Converte a imagem para buffer
     const imageBuffer = await file.toBuffer();
 
@@ -31,7 +31,6 @@ class UploadImageService {
     // Salva a imagem no banco de dados
     await this.prisma.imageStorage.create({
       data: {
-        userId: userData,
         imageBlob: imageBuffer,     // Armazena a imagem em formato binário
         mimeType: file.mimetype,
         size: imageBuffer.length,    // Armazena o tipo MIME da imagem

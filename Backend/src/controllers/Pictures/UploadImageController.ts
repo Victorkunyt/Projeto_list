@@ -13,7 +13,7 @@ class UploadImageController {
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const file = await request.file(); // Captura o arquivo do form-data
-    const userId = request.query as UserIdImage 
+    //const userId = request.query as UserIdImage 
   
     if (!file) {
       reply.status(400).send({ error: 'Arquivo não encontrado no form-data ou acima de 300 KB(Mongo DB)' });
@@ -38,7 +38,7 @@ class UploadImageController {
   
     try {
       // Passa o arquivo diretamente para o serviço
-      await uploadImageService.execute(file,userId);
+      await uploadImageService.execute(file);
       reply.code(201).send({ message: 'Imagem enviada com sucesso!' });
     } catch (error) {
       if (error instanceof ExistsError) {
