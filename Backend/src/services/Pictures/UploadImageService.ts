@@ -25,6 +25,16 @@ class UploadImageService {
       throw new ExistsError('Usuário não encontrado');
   }
 
+  const ExistingImage = await this.prisma.imageStorage.findFirst({
+    where: {
+        userId: userData.userId
+    }
+});
+
+  if (ExistingImage) {
+    throw new ExistsError('Usuario já contem foto enviada');
+}
+
     // Converte a imagem para buffer
     const imageBuffer = await file.toBuffer();
 
