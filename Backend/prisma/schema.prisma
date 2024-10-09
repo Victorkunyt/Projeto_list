@@ -101,12 +101,14 @@ model ImageStorage {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   imageBlob Bytes    // Armazena a imagem em binário
   mimeType  String   // Para identificar se é PNG, JPG, etc.
-  size      Int      // Para armazenar o tamanho do arquivo em bytes
-  created_at    DateTime?     @default(now())
-  updated_at    DateTime?     @default(now())
+  userId    String   // ID do usuário associado
+  size      Int  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("ImageStorage")
 }
+
 
 
 

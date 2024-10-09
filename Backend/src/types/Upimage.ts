@@ -4,4 +4,10 @@ interface paramImage {
   }
   
   export { paramImage };
+
+  interface UserIdImage {
+    userId: any;
+  }
+  
+  export { UserIdImage };
   
