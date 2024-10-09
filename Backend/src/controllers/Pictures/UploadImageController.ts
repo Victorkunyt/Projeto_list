@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { UploadImageService } from "../../services/Pictures/UploadImageService";
 import { PrismaClient } from "@prisma/client";
 import { ExistsError } from "../../error/ExistsError";
+import { UserIdImage } from "../../types/Upimage";
 
 class UploadImageController {
   private prisma: PrismaClient;
@@ -12,7 +13,7 @@ class UploadImageController {
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const file = await request.file(); // Captura o arquivo do form-data
-
+    const requestQuery = request.query as UserIdImage
     if (!file) {
       reply.status(400).send({ error: 'Arquivo não encontrado no form-data' });
       return;
@@ -37,7 +38,7 @@ class UploadImageController {
 
     try {
       // Passa o arquivo diretamente para o serviço
-      await uploadImageService.execute(file);
+      await uploadImageService.execute(file,requestQuery);
 
       reply.code(201).send({ message: 'Imagem enviada com sucesso!' });
     } catch (error) {

@@ -2,6 +2,7 @@ import { paramImage } from "../../types/Upimage";
 import { ExistsError } from "../../error/ExistsError";
 import { UserIdImage } from "../../types/Upimage";
 
+
 const IMGparam = (userData: Partial<paramImage>) => {
   if (userData.id === undefined) {
     throw new ExistsError("O id não está definido.");

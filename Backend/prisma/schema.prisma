@@ -99,6 +99,7 @@ model PdfStorage {
 
 model ImageStorage {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
   imageBlob Bytes    // Armazena a imagem em binário
   mimeType  String   // Para identificar se é PNG, JPG, etc.
   size      Int  

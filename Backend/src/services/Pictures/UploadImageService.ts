@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { ExistsError } from "../../error/ExistsError";
-import { MultipartFile } from "fastify-multipart"; // Tipagem correta do arquivo
+import { MultipartFile } from "fastify-multipart";
+import { IMGUserid } from "../../validators/IMG/uploadImageValidator";
+import { UserIdImage } from "../../types/Upimage";
 
 class UploadImageService {
   private prisma: PrismaClient;
@@ -10,25 +12,27 @@ class UploadImageService {
   }
 
   // Método responsável por armazenar a imagem no banco de dados
-  async execute(file: MultipartFile): Promise<void> {
-    // Tipos MIME permitidos
+  async execute(file: MultipartFile,userData: UserIdImage): Promise<void> {
+    IMGUserid(userData)
+
+    const iduserServer = await this.prisma.user.findFirst({
+      where: {
+          id: userData.userId
+      }
+  });
+
+  if (!iduserServer) {
+      throw new ExistsError('Usuário não encontrado');
+  }
 
     // Converte a imagem para buffer
     const imageBuffer = await file.toBuffer();
 
-    // Verifica se já existe uma imagem com o mesmo MIME type (opcional)
-    const existingImage = await this.prisma.imageStorage.findFirst({
-      where: { mimeType: file.mimetype },
-    });
-
-    if (existingImage) {
-      throw new ExistsError("Uma imagem com o mesmo tipo MIME já existe.");
-    }
-
     // Salva a imagem no banco de dados
     await this.prisma.imageStorage.create({
       data: {
-        imageBlob: imageBuffer,     // Armazena a imagem em formato binário
+        imageBlob: imageBuffer,
+        userId: userData.userId,     // Armazena a imagem em formato binário
         mimeType: file.mimetype,
         size: imageBuffer.length,    // Armazena o tipo MIME da imagem
       },
