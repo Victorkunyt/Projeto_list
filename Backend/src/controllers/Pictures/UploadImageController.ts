@@ -2,7 +2,6 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { UploadImageService } from "../../services/Pictures/UploadImageService";
 import { PrismaClient } from "@prisma/client";
 import { ExistsError } from "../../error/ExistsError";
-import { UserIdImage } from "../../types/Upimage";
 
 class UploadImageController {
   private prisma: PrismaClient;
@@ -13,7 +12,6 @@ class UploadImageController {
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const file = await request.file(); // Captura o arquivo do form-data
-    //const userId = request.query as UserIdImage 
   
     if (!file) {
       reply.status(400).send({ error: 'Arquivo não encontrado no form-data ou acima de 300 KB(Mongo DB)' });
@@ -23,7 +21,6 @@ class UploadImageController {
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     if (!allowedMimeTypes.includes(file.mimetype)) {
       reply.status(400).send({ error: 'Tipo de arquivo não permitido. Apenas imagens JPEG e PNG são aceitas.' });
-      return;
     }
     // Define o tamanho máximo do arquivo (5 MB neste exemplo)
     const maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
@@ -31,7 +28,6 @@ class UploadImageController {
     const imageBuffer = await file.toBuffer();
     if (imageBuffer.length > maxSizeInBytes) {
       reply.status(400).send({ error: 'O tamanho do arquivo excede o limite permitido de 5 MB.' });
-      return;
     }
   
     const uploadImageService = new UploadImageService(this.prisma);

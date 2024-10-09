@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ExistsError } from "../../error/ExistsError";
 import { MultipartFile } from "fastify-multipart"; // Tipagem correta do arquivo
-import { IMGUserid } from "../../validators/IMG/uploadImageValidator";
 
 class UploadImageService {
   private prisma: PrismaClient;
@@ -12,7 +11,6 @@ class UploadImageService {
 
   // Método responsável por armazenar a imagem no banco de dados
   async execute(file: MultipartFile): Promise<void> {
-   // IMGUserid(userData)
     // Converte a imagem para buffer
     const imageBuffer = await file.toBuffer();
 
