@@ -13,8 +13,8 @@ class UploadImageController {
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const file = await request.file(); // Captura o arquivo do form-data
-    const userId = request.body as UserIdImage 
-
+    const { userId } = request.body as UserIdImage;
+    
     if (!userId) {
       reply.status(400).send({ error: 'User ID não fornecido.' });
       return;
