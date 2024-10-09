@@ -1,6 +1,6 @@
 import { GetImageService } from "../../services/Pictures/GetImageService";
 import { FastifyRequest, FastifyReply } from "fastify";
-import { paramImage } from "../../types/Upimage";
+import { UserIdImage } from "../../types/Upimage";
 import { PrismaClient } from "@prisma/client";
 import { ExistsError } from "../../error/ExistsError";
 
@@ -12,7 +12,7 @@ class GetImageController {
   }
 
   async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
-    const userData = request.query as paramImage;
+    const userData = request.query as UserIdImage;
     const imageService = new GetImageService(this.prisma);
 
     try {

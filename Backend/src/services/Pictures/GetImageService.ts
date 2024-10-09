@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ExistsError } from "../../error/ExistsError";
-import { paramImage } from "../../types/Upimage";
-import { IMGparam } from "../../validators/IMG/uploadImageValidator";
+import { UserIdImage } from "../../types/Upimage";
+import { IMGUserid } from "../../validators/IMG/uploadImageValidator";
 
 class GetImageService {
   private prisma: PrismaClient;
@@ -10,11 +10,11 @@ class GetImageService {
     this.prisma = prisma;
   }
 
-  async execute(userData: paramImage) {
-    IMGparam(userData); // Valida os parâmetros
+  async execute(userData: UserIdImage) {
+    IMGUserid(userData); // Valida os parâmetros
 
-    const existingImage = await this.prisma.imageStorage.findUnique({
-      where: { id: userData.id }, // Usando findUnique para garantir a busca por id
+    const existingImage = await this.prisma.imageStorage.findFirst({
+      where: { userId: userData.userId }, // Usando findUnique para garantir a busca por id
     });
 
     if (!existingImage) {

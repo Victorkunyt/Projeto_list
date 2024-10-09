@@ -1,12 +1,6 @@
 
-interface paramImage {
-    id: string;
-  }
-  
-  export { paramImage };
-
   interface UserIdImage {
-    userId: any;
+    userId: string;
   }
   
   export { UserIdImage };
