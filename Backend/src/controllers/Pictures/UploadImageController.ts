@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { UploadImageService } from "../../services/UpImage/UploadImageService";
+import { UploadImageService } from "../../services/Pictures/UploadImageService";
 import { PrismaClient } from "@prisma/client";
 import { ExistsError } from "../../error/ExistsError";
 
@@ -37,7 +37,6 @@ class UploadImageController {
     try {
       // Passa o arquivo diretamente para o serviço
       await uploadImageService.execute(file);
-      
       reply.code(201).send({ message: 'Imagem enviada com sucesso!' });
     } catch (error) {
       if (error instanceof ExistsError) {

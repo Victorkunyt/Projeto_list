@@ -10,7 +10,7 @@ import { routesNotification } from "./routes/Notification";
 import { routesPdf } from "./routes/GeneratePdf";
 import { routesNewpassword } from "./routes/Pass";
 import { routesSendEmail } from "./routes/SendEmail";
-import { routesImage } from "./routes/Image";
+import { picturesImage } from "./routes/Picture";
 import fastifyMultipart from 'fastify-multipart';
 
 const app = fastify({ logger: true });
@@ -38,7 +38,7 @@ const routes = [
   routesPdf, 
   routesNewpassword, 
   routesSendEmail,
-  routesImage,
+  picturesImage,
 ];
 
 routes.forEach(route => {
