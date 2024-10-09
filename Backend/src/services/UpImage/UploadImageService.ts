@@ -29,9 +29,8 @@ class UploadImageService {
     await this.prisma.imageStorage.create({
       data: {
         imageBlob: imageBuffer,     // Armazena a imagem em formato binário
-        mimeType: file.mimetype,    // Armazena o tipo MIME da imagem
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        mimeType: file.mimetype,
+        size: imageBuffer.length,    // Armazena o tipo MIME da imagem
       },
     });
   }
