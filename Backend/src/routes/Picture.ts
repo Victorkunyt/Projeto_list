@@ -7,10 +7,8 @@ import { GetImageController } from "../controllers/Pictures/GetImageController";
 
 
 export async function picturesImage(fastify: FastifyInstance, options: FastifyPluginOptions) {
-//   fastify.register(async function(fastify) {
-//     fastify.addHook("preHandler", AuthMiddleware);
-
-//     )
+   fastify.register(async function(fastify) {
+     fastify.addHook("preHandler", AuthMiddleware);
 
 
 const prisma = new PrismaClient();
@@ -23,3 +21,7 @@ fastify.get("/get-image", async(request: FastifyRequest,reply: FastifyReply) => 
   return new GetImageController(prisma).handle(request,reply)
 })
 }
+    )
+
+  }
+
