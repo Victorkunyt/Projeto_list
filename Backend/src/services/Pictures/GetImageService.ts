@@ -13,13 +13,19 @@ class GetImageService {
   async execute(userData: UserIdImage) {
     IMGUserid(userData); // Valida os parâmetros
 
+    const existingUser = await this.prisma.user.findFirst({
+      where: { id: userData.userId }, // Usando findUnique para garantir a busca por id
+    });
+
+       if (!existingUser) {
+       throw new ExistsError("Id não pertence ao do Usuario");
+     }
+
     const existingImage = await this.prisma.imageStorage.findFirst({
       where: { userId: userData.userId }, // Usando findUnique para garantir a busca por id
     });
 
-    if (userData.userId !== existingImage?.userId) {
-      throw new ExistsError("Id não pertence ao do Usuario");
-    }
+
     if (!existingImage) {
       throw new ExistsError("Usuário não contem foto guardada no banco de dados");
     }
