@@ -18,7 +18,7 @@ class GetImageService {
     });
 
     if (!existingImage) {
-      throw new ExistsError("ID não existente");
+      throw new ExistsError("Usuário não contem foto guardada no banco de dados");
     }
 
     return existingImage; // Retornando o objeto existente, que já inclui imageBlob e mimeType
