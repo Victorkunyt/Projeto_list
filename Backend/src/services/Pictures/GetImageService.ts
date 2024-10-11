@@ -17,13 +17,14 @@ class GetImageService {
       where: { userId: userData.userId }, // Usando findUnique para garantir a busca por id
     });
 
+    if (userData.userId !== existingImage?.userId) {
+      throw new ExistsError("Id não pertence ao do Usuario");
+    }
     if (!existingImage) {
       throw new ExistsError("Usuário não contem foto guardada no banco de dados");
     }
 
-    if (userData.userId !== existingImage.userId) {
-      throw new ExistsError("Id não pertence ao do Usuario");
-    }
+
 
     return existingImage; // Retornando o objeto existente, que já inclui imageBlob e mimeType
   }
