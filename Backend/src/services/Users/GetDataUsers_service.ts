@@ -25,6 +25,7 @@ class GetDataUsersService {
       email: string;
       gender: string;
       password: string;
+      adminUser: boolean;
       status: boolean;
       created_at: Date | null;
       updated_at: Date | null;
@@ -50,6 +51,7 @@ class GetDataUsersService {
       email: user.email,
       gender: user.gender,
       password: user.password,
+      adminUser: user.adminUser,
       userId: user.id // Adiciona o userId
     }));
 

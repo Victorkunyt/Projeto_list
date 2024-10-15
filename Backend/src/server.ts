@@ -12,11 +12,15 @@ import { routesNewpassword } from "./routes/Pass";
 import { routesSendEmail } from "./routes/SendEmail";
 import { picturesImage } from "./routes/Picture";
 import fastifyMultipart from 'fastify-multipart';
+import * as dotenv from 'dotenv';
+
+// Carregar o arquivo .env
+dotenv.config();
 
 const app = fastify({ logger: true });
 const PORT = parseInt(`${process.env.PORT || 3333}`);
 
-// Plugin para permitir o upload de arquivos.
+// Plugin para permitir o upload de arquivos
 app.register(fastifyMultipart);
 
 // Plugin do CORS
@@ -24,7 +28,7 @@ app.register(cors);
 
 // Plugin JWT
 app.register(fastifyJwt, {
-  secret: 'supersecret'
+  secret: 'supersecret',
 });
 
 // Registrando todas as Rotas
@@ -45,7 +49,6 @@ routes.forEach(route => {
   app.register(route);
 });
 
-
 const start = async () => {
   try {
     await app.listen({ port: PORT });
@@ -57,3 +60,4 @@ const start = async () => {
 };
 
 start();
+

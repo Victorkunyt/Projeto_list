@@ -8,6 +8,7 @@ import {
   HolderidphoneValidator,
   GenderValidator,
   PasswordValidator,
+  AdminTypeValidator,
 } from "../../validators/Login/RegisterUsers";
 import { ExistsError } from "../../error/ExistsError";
 import { registerNotification } from "../../functions/SendNotification";
@@ -27,6 +28,7 @@ class UsersService {
     HolderidphoneValidator(userData);
     GenderValidator(userData);
     PasswordValidator(userData);
+    AdminTypeValidator(userData)
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
 
@@ -77,6 +79,7 @@ class UsersService {
         email: userData.email,
         gender: userData.gender,
         password: hashedPassword,
+        adminUser: userData.adminUser
       },
     });
 

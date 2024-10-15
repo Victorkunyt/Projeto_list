@@ -7,6 +7,7 @@ interface UserTypes {
     gender: string;
     password: string;
     userId: any
+    adminUser: boolean
 }
 
 export { UserTypes };

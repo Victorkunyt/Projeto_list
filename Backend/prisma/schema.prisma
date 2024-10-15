@@ -16,6 +16,7 @@ model User {
   email         String
   gender        String
   password      String
+  adminUser     Boolean
   status        Boolean
   created_at    DateTime?     @default(now())
   updated_at    DateTime?     @default(now())

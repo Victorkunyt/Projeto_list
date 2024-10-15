@@ -2,7 +2,6 @@
 import { UserTypes } from "../../types/Users_types";
 import { ExistsError } from "../../error/ExistsError";
 
-
 const LineObrigatórios = (userData: Partial<UserTypes>) => {
   if (
     !userData.cellphone ||
@@ -22,23 +21,22 @@ const LineObrigatórios = (userData: Partial<UserTypes>) => {
 
 const HolderidphoneValidator = (userData: Partial<UserTypes>) => {
   if (userData.holderid === undefined) {
-      throw new ExistsError("O holderId não está definido.");
+    throw new ExistsError("O holderId não está definido.");
   }
 
-  const cpfvalidator = require('cpf-validator-tmc');
+  const cpfvalidator = require("cpf-validator-tmc");
 
   const holderid = userData.holderid.trim();
   const onlyNumbers = /^\d+$/;
 
   if (!onlyNumbers.test(holderid)) {
-      throw new ExistsError("O holderId deve conter apenas números.");
+    throw new ExistsError("O holderId deve conter apenas números.");
   }
 
   if (!cpfvalidator(holderid)) {
-      throw new ExistsError('CPF inválido');
+    throw new ExistsError("CPF inválido");
   }
 };
-
 
 const CellphoneValidator = (userData: Partial<UserTypes>) => {
   if (userData.cellphone === undefined) {
@@ -51,9 +49,9 @@ const CellphoneValidator = (userData: Partial<UserTypes>) => {
 
   const isNumeric = /^\d+$/;
 
-if (!isNumeric.test(userData.cellphone)) {
-  throw new ExistsError(`O Número de Celular deve conter apenas dígitos`);
-}
+  if (!isNumeric.test(userData.cellphone)) {
+    throw new ExistsError(`O Número de Celular deve conter apenas dígitos`);
+  }
 };
 
 const emailValidator = (userData: Partial<UserTypes>) => {
@@ -74,58 +72,66 @@ const emailValidator = (userData: Partial<UserTypes>) => {
 
 const GenderValidator = (userData: Partial<UserTypes>) => {
   if (userData.gender === undefined) {
-      throw new ExistsError("O Gender não está definido.");
+    throw new ExistsError("O Gender não está definido.");
   }
 
-  if (userData.gender.toLowerCase() !== "m" && userData.gender.toLowerCase() !== "f" && userData.gender !== "Outros") {
-
-    throw new ExistsError(`O sexo do usuário é somente M, F ou Outros`)
+  if (
+    userData.gender.toLowerCase() !== "m" &&
+    userData.gender.toLowerCase() !== "f" &&
+    userData.gender !== "Outros"
+  ) {
+    throw new ExistsError(`O sexo do usuário é somente M, F ou Outros`);
   }
-
 };
 
 const PasswordValidator = (userData: Partial<UserTypes>) => {
-
   if (userData.password === undefined) {
     throw new ExistsError("O Password não está definido.");
-}
+  }
 
   const numericDigitRegex = /\d/;
   const specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
 
   if (userData.password.length < 8) {
-    throw new ExistsError('Senha precisa possuir pelo menos 8 caracteres');
+    throw new ExistsError("Senha precisa possuir pelo menos 8 caracteres");
   }
 
   if (!/[A-Z]/.test(userData.password)) {
-    throw new ExistsError('Senha precisa possuir pelo menos 1 letra Maiúscula');
+    throw new ExistsError("Senha precisa possuir pelo menos 1 letra Maiúscula");
   }
 
   if (!/[a-z]/.test(userData.password)) {
-    throw new ExistsError('Senha precisa possuir pelo menos 1 letra Minúscula');
+    throw new ExistsError("Senha precisa possuir pelo menos 1 letra Minúscula");
   }
 
   if (!numericDigitRegex.test(userData.password)) {
-    throw new ExistsError('Senha precisa possuir pelo menos um Digito Numérico');
+    throw new ExistsError(
+      "Senha precisa possuir pelo menos um Digito Numérico"
+    );
   }
 
   if (!specialCharacterRegex.test(userData.password)) {
-    throw new ExistsError('Senha precisa possuir pelo menos um caractere especial (e.g, !@#$%)');
+    throw new ExistsError(
+      "Senha precisa possuir pelo menos um caractere especial (e.g, !@#$%)"
+    );
   }
+};
 
+const AdminTypeValidator = (userData: Partial<UserTypes>) => {
+  if (userData.adminUser === undefined) {
+    throw new ExistsError("O adminUser não está definido.");
+  }
+  if (typeof userData.adminUser !== "boolean") {
+    throw new ExistsError("Admin user é um booleano, só aceita true ou false");
+  }
+};
 
-}
-
-
-export { LineObrigatórios, emailValidator,CellphoneValidator,HolderidphoneValidator,GenderValidator,PasswordValidator};
-
-
-
-
-
-
- 
-
-
-  
-
+export {
+  LineObrigatórios,
+  emailValidator,
+  CellphoneValidator,
+  HolderidphoneValidator,
+  GenderValidator,
+  PasswordValidator,
+  AdminTypeValidator,
+};
