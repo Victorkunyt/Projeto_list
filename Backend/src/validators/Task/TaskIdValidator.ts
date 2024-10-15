@@ -43,6 +43,18 @@ const IdUsuario = (userData: Partial<Iduser>) => {
     throw new ExistsError("id inválido");
   }
 
+  if (userData.userAdminID === undefined) {
+    throw new ExistsError("O Campo userAdminID não foi definido");
+  }
+
+  if (!userData.userAdminID.trim()) {
+    throw new ExistsError("O Parametro userAdminID não pode ser vazio ou nulo");
+  }
+
+  if (typeof userData.userAdminID !== 'string' || userData.id.length !== 24){
+    throw new ExistsError("userAdminID inválido");
+  }
+
 };
 
 export { TaskID, IdUsuario };
