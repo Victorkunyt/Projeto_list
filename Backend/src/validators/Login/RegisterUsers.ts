@@ -44,6 +44,9 @@ const CellphoneValidator = (userData: Partial<UserTypes>) => {
   }
   const isNumeric = /^\d+$/;
 
+  if (userData.cellphone.length !== 11) {
+    throw new ExistsError(`O Numero de Celular tem que ter 11 Digitos incluindo o DDD. juntos e sem espaço`);
+  }
   if (!isNumeric.test(userData.cellphone)) {
     throw new ExistsError(`O Número de Celular deve conter apenas dígitos`);
   }
@@ -52,9 +55,7 @@ const CellphoneValidator = (userData: Partial<UserTypes>) => {
     throw new ExistsError(`O Número de Celular não pode conter espaços`);
   }
 
-  if (userData.cellphone.length !== 11) {
-    throw new ExistsError(`O Numero de Celular tem que ter 11 Digitos`);
-  }
+
 };
 
 const emailValidator = (userData: Partial<UserTypes>) => {
