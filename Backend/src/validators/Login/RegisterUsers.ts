@@ -12,7 +12,7 @@ const LineObrigatórios = (userData: Partial<UserTypes>) => {
     !userData.password
   ) {
     throw new ExistsError(
-      `Por favor, forneça todas as informações necessárias para o cadastro, e Todos os campos são obrigatórios`
+      `Por favor todos os campos são obrigatórios`
     );
   }
 };
