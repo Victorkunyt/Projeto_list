@@ -12,4 +12,8 @@ interface Iduser {
     userAdminID: string
 }
 
-export {TasksTypes,Iduser}
+interface Id {
+    id: string
+}
+
+export {TasksTypes,Iduser,Id}

@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { DeleteTaskService } from "../../services/Tasks/DeleteTask_service";
-import { Iduser } from "../../types/Task_types";
+import { Id } from "../../types/Task_types";
 import { PrismaClient } from "@prisma/client";
 
 class TaskDeleteController {
@@ -11,7 +11,7 @@ class TaskDeleteController {
     }
     async handle(request: FastifyRequest, response: FastifyReply): Promise<void> {
    
-            const userData = request.query as Iduser; 
+            const userData = request.query as Id; 
             const DeleteTaskUsers = new DeleteTaskService(this.prisma);
             await DeleteTaskUsers.execute(userData);
 

@@ -1,5 +1,5 @@
 import { TasksTypes } from "../../types/Task_types";
-import { Iduser } from "../../types/Task_types";
+import { Id,Iduser} from "../../types/Task_types";
 import { ExistsError } from "../../error/ExistsError";
 
 const TaskID = (userData: Partial<TasksTypes>) => {
@@ -54,7 +54,23 @@ const IdUsuario = (userData: Partial<Iduser>) => {
   if (typeof userData.userAdminID !== 'string' || userData.id.length !== 24){
     throw new ExistsError("userAdminID inválido");
   }
+}
+
+
+const IdTask = (userData: Partial<Id>) => {
+    
+  if (userData.id === undefined) {
+    throw new ExistsError("O Campo id não foi definido");
+  }
+
+  if (!userData.id.trim()) {
+    throw new ExistsError("O Parametro id não pode ser vazio ou nulo");
+  }
+
+  if (typeof userData.id !== 'string' || userData.id.length !== 24){
+    throw new ExistsError("id inválido");
+
 
 };
-
-export { TaskID, IdUsuario };
+};
+export { TaskID, IdUsuario,IdTask };
