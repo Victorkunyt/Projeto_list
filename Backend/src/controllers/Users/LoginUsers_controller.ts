@@ -14,16 +14,9 @@ class LoginUserController {
    
             const userData = request.body as LogType; 
             const LoginUsers = new LoginService(this.prisma);
-            try {
-              const token = await LoginUsers.execute(userData);
-              response.send(token);
-            } catch (error) {
-              if (error instanceof ExistsError) {
-                response.status(400).send({ error: error.message });
-              } else {
-                response.send(error)
-              }
-            }
+          
+            const token = await LoginUsers.execute(userData);
+            response.send(token);
 
 }
     }
