@@ -42,11 +42,6 @@ const CellphoneValidator = (userData: Partial<UserTypes>) => {
   if (userData.cellphone === undefined) {
     throw new ExistsError("O CellPhone não está definido.");
   }
-
-  if (userData.cellphone.length !== 11) {
-    throw new ExistsError(`O Numero de Celular tem que ter 11 Digitos`);
-  }
-
   const isNumeric = /^\d+$/;
 
   if (!isNumeric.test(userData.cellphone)) {
@@ -55,6 +50,10 @@ const CellphoneValidator = (userData: Partial<UserTypes>) => {
 
   if (userData.cellphone.includes(' ')) {
     throw new ExistsError(`O Número de Celular não pode conter espaços`);
+  }
+
+  if (userData.cellphone.length !== 11) {
+    throw new ExistsError(`O Numero de Celular tem que ter 11 Digitos`);
   }
 };
 
