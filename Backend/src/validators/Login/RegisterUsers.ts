@@ -52,6 +52,10 @@ const CellphoneValidator = (userData: Partial<UserTypes>) => {
   if (!isNumeric.test(userData.cellphone)) {
     throw new ExistsError(`O Número de Celular deve conter apenas dígitos`);
   }
+
+  if (userData.cellphone.includes(' ')) {
+    throw new ExistsError(`O Número de Celular não pode conter espaços`);
+  }
 };
 
 const emailValidator = (userData: Partial<UserTypes>) => {
