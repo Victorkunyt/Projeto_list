@@ -82,7 +82,7 @@ const GenderValidator = (userData: Partial<UserTypes>) => {
   if (
     userData.gender.toLowerCase() !== "m" &&
     userData.gender.toLowerCase() !== "f" &&
-    userData.gender.toLowerCase() !== "Outros"
+    userData.gender.toLowerCase() !== "outros"
   ) {
     throw new ExistsError(`O sexo do usuário é somente M, F ou Outros`);
   }
