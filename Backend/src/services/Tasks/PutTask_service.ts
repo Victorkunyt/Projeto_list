@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { TasksTypes,Iduser } from "../../types/Task_types";
-import { IdUsuario } from "../../validators/Task/TaskIdValidator";
+import { IdTask } from "../../validators/Task/TaskIdValidator";
 import { TaskCampos } from "../../validators/Task/TaskValidator";
 import { ExistsError } from "../../error/ExistsError";
 
@@ -13,7 +13,7 @@ class PutTaskService {
   async execute(userData: TasksTypes, id: Iduser) {
 
     TaskCampos(userData);
-    IdUsuario(id);
+    IdTask(id);
 
     const findId = await this.prisma.task.findFirst({
       where: {
